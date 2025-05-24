@@ -5,7 +5,7 @@ const Popper = withInstall(_Popper)
 
 export default Popper
 
-export type { PopperProps } from './src/popper.vue'
+export type { PopperProps } from './src/popper'
 
 declare module 'vue' {
     export interface GlobalComponents {

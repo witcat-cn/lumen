@@ -17,14 +17,16 @@ export const buttonProps = {
         validator: (v: any) => ['small', 'medium', 'large'].includes(v)
     },
     round: Boolean,
+    plain: Boolean,
     circle: Boolean,
     icon: {
-        type: [String, Function] as PropType<string | (() => Component)>,
+        // accept string, SFC object, or functional component
+        type: [String, Object, Function] as PropType<string | Component>,
         default: undefined
     },
     loading: Boolean,
     loadingIcon: {
-        type: [String, Function] as PropType<string | (() => Component)>,
+        type: [String, Object, Function] as PropType<string | Component>,
         default: undefined
     },
     disabled: Boolean,
@@ -32,7 +34,7 @@ export const buttonProps = {
         type: String as PropType<NativeType>,
         default: 'button'
     },
-    iconPlacement: {
+    iconPosition: {
         type: String as PropType<Placement>,
         default: 'left'
     }
@@ -43,5 +45,17 @@ export const buttonEmits = {
     mousedown: (event: MouseEvent) => event instanceof MouseEvent,
 }
 
-export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
+export interface ButtonProps {
+    type?: ButtonType
+    size?: ButtonSize
+    round?: boolean
+    plain?: boolean
+    circle?: boolean
+    icon?: string | Component
+    loading?: boolean
+    loadingIcon?: string | Component
+    disabled?: boolean
+    nativeType?: NativeType
+    iconPosition?: Placement
+}
 export type ButtonEmits = typeof buttonEmits;

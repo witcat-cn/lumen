@@ -1,0 +1,51 @@
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+@use 'global/var' as *;
+
+@include b(switch) {
+  display: inline-flex;
+  align-items: center;
+  gap: .5em;
+  cursor: pointer;
+
+  @include when(disabled) { cursor: not-allowed; opacity: .6; }
+  @include when(small) { font-size: 12px; }
+
+  @include e(input) { display: none; }
+
+  @include e(track) {
+    position: relative;
+    width: 2.5em; height: 1.4em;
+    background: var(--background-color-light);
+    border: 1px solid var(--border-color-light);
+    border-radius: 999px;
+    transition: background .2s ease;
+  }
+
+  @include e(thumb) {
+    position: absolute; top: 50%; left: .2em;
+    width: 1em; height: 1em; border-radius: 50%; transform: translateY(-50%);
+    background: var(--color-white);
+    border: 1px solid var(--border-color-light);
+    transition: left .2s ease;
+  }
+
+  input:checked + .#{$namespace}-switch__track {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  input:checked + .#{$namespace}-switch__track .#{$namespace}-switch__thumb {
+    left: calc(100% - 1.2em);
+    background: var(--color-white);
+    border-color: var(--color-primary);
+  }
+
+  @include e(label) { color: var(--color-text-regular); }
+
+  .dark & {
+    @include e(track) { background: var(--background-color-base); border-color: var(--border-color-code); }
+    @include e(thumb) { background: var(--background-color-light); border-color: var(--border-color-code); }
+    @include e(label) { color: var(--color-text-regular); }
+  }
+}
+

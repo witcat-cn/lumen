@@ -29,4 +29,3 @@ const style = computed(() => {
   </div>
 </template>
 
-<style scoped lang="scss"></style>

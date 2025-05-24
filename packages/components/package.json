@@ -9,5 +9,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.10.0"
+  "packageManager": "pnpm@10.10.0",
+  "exports": {
+    "./button": "./button/index.ts",
+    "./icon": "./icon/index.ts",
+    "./container": "./container/index.ts",
+    "./layout": "./layout/index.ts",
+    "./popper": "./popper/index.ts",
+    "./pagination": "./pagination/index.ts",
+    "./switch": "./switch/index.ts",
+    "./checkbox": "./checkbox/index.ts"
+  }
 }

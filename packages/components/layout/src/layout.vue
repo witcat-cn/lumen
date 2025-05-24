@@ -14,6 +14,3 @@ const props = defineProps(layoutProps)
   </div>
 </template>
 
-<style scoped lang="scss">
-
-</style>

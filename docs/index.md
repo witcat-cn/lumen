@@ -8,10 +8,10 @@ hero:
   actions:
     - theme: brand
       text: Markdown Examples
-      link: /markdown-components
+      link: /components
     - theme: alt
-      text: API Examples
-      link: /api-components
+      text: Components (ZH)
+      link: /zh/components
 
 features:
   - title: Feature A

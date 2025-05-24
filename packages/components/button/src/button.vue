@@ -1,34 +1,17 @@
 <script setup lang="ts">
-import { createNamespace } from '@lumen-ui/utils/create'
-import type { ButtonType, ButtonSize, NativeType } from './button'
-import Loading from '@lumen-ui/components/internal-icon/Loading.vue'
-import { computed, useSlots, markRaw } from 'vue'
+import {createNamespace} from '@lumen-ui/utils/create'
+import {buttonProps} from './button'
+import { LoadingIcon as Loading } from '@lumen-ui/components/icon'
+import {computed, useSlots, markRaw} from 'vue'
 
 const bem = createNamespace('button')
 
 defineOptions({name: 'lm-button'})
 
+const props = defineProps(buttonProps)
 
 // 判断是否需要显示图标
-const showIcon = computed(() => {
-  // 使用双重否定确保返回布尔值
-  return !!(props.loading || slots.icon || props.icon)
-})
-
-// 使用TypeScript泛型标注props类型
-const props = defineProps<{
-  type?: ButtonType
-  size?: ButtonSize
-  round?: boolean
-  plain?: boolean
-  circle?: boolean
-  icon?: string | object | Function
-  loading?: boolean
-  disabled?: boolean
-  nativeType?: NativeType
-  iconPosition?: 'left' | 'right',
-  loadingIcon?: string | object | Function
-}>()
+const showIcon = computed(() => !!(props.loading || slots.icon || props.icon))
 
 // 统一计算图标大小，适用于loading图标和普通图标
 const iconSize = computed(() => {
@@ -67,8 +50,8 @@ const slots = useSlots()
       bem.is('circle', props.circle),
       bem.is(`icon-${props.iconPosition}`, !!showIcon && !!$slots.default)
     ]"
-      :type="nativeType"
-      :disabled="disabled || loading"
+      :type="props.nativeType"
+      :disabled="props.disabled || props.loading"
   >
     <!-- 左侧图标 -->
     <template v-if="(loading || slots.icon || props.icon) && (!props.iconPosition || props.iconPosition === 'left')">

@@ -1,0 +1,25 @@
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+@use 'global/var' as *;
+
+@include b(checkbox) {
+  display: inline-flex; align-items: center; gap: .5em; cursor: pointer;
+  @include when(disabled) { .#{$namespace}-checkbox__box { filter: grayscale(0.3); } }
+
+  @include when(disabled) { cursor: not-allowed; opacity: .6; }
+  @include when(indeterminate) { .#{$namespace}-checkbox__box { background: var(--background-color-darker); } }
+
+  @include e(input) { display: none; }
+  @include e(box) { display: inline-flex; align-items: center; justify-content: center; width: var(--checkbox-size, 1em); height: var(--checkbox-size, 1em); border: 1px solid var(--border-color-light); background: var(--background-color-light); border-radius: .3em; }
+  .icon { flex: 0 0 auto; width: calc(var(--checkbox-size, 1.2em) * .85); height: calc(var(--checkbox-size, 1.2em) * .85); color: var(--color-white); }
+  @include e(label) { color: var(--color-text-primary); }
+
+  input:checked + .#{$namespace}-checkbox__box { background: var(--color-primary); border-color: var(--color-primary); }
+  .dark & {
+    @include e(box) { background: var(--background-color-base); border-color: var(--border-color-code); }
+    @include e(label) { color: var(--color-text-regular); }
+  }
+}
+
+@include b(checkbox-group) { display: inline-flex; flex-wrap: wrap; gap: .75em; }
+

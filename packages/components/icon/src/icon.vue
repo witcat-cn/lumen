@@ -27,6 +27,3 @@ const style = computed(() => {
   </i>
 </template>
 
-<style scoped lang="scss">
-
-</style>

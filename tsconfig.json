@@ -4,7 +4,7 @@
     "declaration": false,
     "noImplicitAny": true,
     "removeComments": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "jsx": "preserve",
     "noLib": false,

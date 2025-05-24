@@ -22,7 +22,26 @@ export default defineConfig({
             });
         },
     },
-    vite: {},
+    vite: {
+        resolve: {
+            alias: [
+                { find: /^@lumen-ui\/components\/(.*)$/, replacement: resolve(__dirname, '../../packages/components/$1') },
+                { find: /^@lumen-ui\/components$/, replacement: resolve(__dirname, '../../packages/components') },
+                { find: /^@lumen-ui\/theme-chalk(.*)$/, replacement: resolve(__dirname, '../../packages/theme-chalk$1') },
+            ],
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    // Use Sass modern JS API to avoid legacy deprecation warnings
+                    api: 'modern',
+                },
+                sass: {
+                    api: 'modern',
+                },
+            },
+        },
+    },
     locales: {
         root: {label: 'English', lang: 'en-US', link: '/', ...enConfig},
         zh: {label: '简体中文', lang: 'zh-CN', link: '/zh', ...zhConfig},

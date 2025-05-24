@@ -14,7 +14,7 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'Loading',
+  name: 'LmLoadingIcon',
   props: {
     size: {
       type: [Number, String],
@@ -23,3 +23,4 @@ export default defineComponent({
   }
 })
 </script>
+

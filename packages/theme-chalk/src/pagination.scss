@@ -1,0 +1,98 @@
+@use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
+@use 'global/var' as *;
+
+@include b(pagination) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-small);
+
+  @include e(btn) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2em;
+    height: 2em;
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius-small);
+    background-color: var(--background-color-light);
+    color: var(--color-text-primary);
+
+    @media (hover: hover) {
+      &:hover:not(.#{$state-prefix}disabled) {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+    }
+
+    &.#{$state-prefix}disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .icon { width: 1em; height: 1em; }
+  }
+
+  @include e(page) {
+    min-width: 2em;
+    height: 2em;
+    padding: 0 .5em;
+    border: 1px solid var(--border-color-light);
+    border-radius: var(--border-radius-small);
+    background-color: var(--background-color-light);
+    color: var(--color-text-primary);
+
+    &.#{$state-prefix}active {
+      border-color: var(--color-primary);
+      color: var(--color-white);
+      background-color: var(--color-primary);
+    }
+  }
+
+  @include e(ellipsis) {
+    padding: 0 .25em;
+    color: var(--color-text-secondary);
+  }
+
+  @include e(sizes) { select { height: 2em; border: 1px solid var(--border-color-light); background-color: var(--background-color-light); border-radius: var(--border-radius-small); } }
+  @include e(jumper) { display: inline-flex; align-items: center; gap: .25em; input { width: 4em; height: 2em; border: 1px solid var(--border-color-light); background-color: var(--background-color-light); border-radius: var(--border-radius-small); padding: 0 .4em; } }
+  @include e(total) { color: var(--color-text-secondary); }
+
+  &.#{$state-prefix}background {
+    @include e(page) { background-color: var(--background-color-light); }
+  }
+  &.#{$state-prefix}small {
+    @include e(btn) { width: 1.6em; height: 1.6em; }
+    @include e(page) { height: 1.6em; min-width: 1.6em; font-size: 12px; }
+
+  // dark mode adjustments
+  .dark & {
+    @include e(btn) {
+      background-color: var(--background-color-base);
+      border-color: var(--border-color-code);
+      color: var(--color-text-regular);
+      @media (hover: hover) {
+        &:hover:not(.#{$state-prefix}disabled) {
+          border-color: var(--color-primary);
+          color: var(--color-primary);
+        }
+      }
+    }
+    @include e(page) {
+      background-color: var(--background-color-base);
+      border-color: var(--border-color-code);
+      color: var(--color-text-regular);
+      &.#{$state-prefix}active {
+        background-color: var(--color-primary);
+        color: var(--color-white);
+      }
+    }
+    @include e(sizes) { select { background-color: var(--background-color-base); border-color: var(--border-color-code); color: var(--color-text-regular); } }
+    @include e(jumper) { input { background-color: var(--background-color-base); border-color: var(--border-color-code); color: var(--color-text-regular); } }
+    @include e(total) { color: var(--color-text-regular); }
+  }
+
+  }
+
+}
+

@@ -14,7 +14,7 @@ export const enConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
             prev: 'Previous page',
             next: 'Next page'
         },
-        logo: './logo.png',
+        logo: '/logo.png',
         nav: getNavbar(),
         sidebar,
         outline: {

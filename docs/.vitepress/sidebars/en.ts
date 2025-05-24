@@ -1,15 +1,15 @@
 export const sidebar = [
-    {
-        text: 'Introduction',
+  {
+    text: 'Components',
+    items: [
+      {
+        text: 'Basic',
         items: [
-            {text: 'Overview', link: '/en/components/introduction/markdown'},
-            {
-                text: 'Basic',
-                items: [
-                    {text: 'Button', link: '/en/components/api'},
-                    {text: 'Icon', link: '/en/components/api'},
-                ]
-            },
-        ]
-    }
+          { text: 'Pagination', link: '/components/pagination' },
+          { text: 'Switch', link: '/components/switch' },
+          { text: 'Checkbox', link: '/components/checkbox' },
+        ],
+      },
+    ],
+  },
 ]

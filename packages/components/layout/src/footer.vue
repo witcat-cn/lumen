@@ -14,4 +14,3 @@ const props = defineProps(footerProps)
   </footer>
 </template>
 
-<style scoped lang="scss"></style>

@@ -1,11 +1,11 @@
 import { ref, shallowRef, watch, onUnmounted, nextTick, computed, type Ref } from 'vue'
 import { createPopper, Instance as PopperInstance, type Placement, type Modifier } from '@popperjs/core'
 
-interface PopperProps {
+export interface PopperProps {
     readonly text: string
     readonly popper: string
-    readonly placement: Placement
-    readonly offset: readonly [number, number]
+    readonly placement?: Placement
+    readonly offset?: readonly [number, number]
 }
 
 interface PopperRefs {

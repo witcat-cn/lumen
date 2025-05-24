@@ -20,12 +20,7 @@ const bem = createNamespace('popper')
 
 defineOptions({name: 'lm-popper'})
 
-export interface PopperProps {
-  text: string;
-  popper: string;
-  placement?: 'top' | 'bottom' | 'left' | 'right';
-  offset?: [number, number];
-}
+import type { PopperProps } from './popper'
 
 const props = withDefaults(defineProps<PopperProps>(), {
   placement: 'bottom',

@@ -1,0 +1,13 @@
+@use 'mixins/mixins' as *;
+
+@include b(icon) {
+  display: flex;
+  align-items: center;
+  padding: 1px;
+  margin: 2px;
+  vertical-align: middle;
+}
+
+svg {
+  stroke: currentColor;
+}

@@ -1,0 +1,9 @@
+packages:
+  - docs
+  - preview
+  - packages/**
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - vitepress-theme-demoblock
+  - vue-demi

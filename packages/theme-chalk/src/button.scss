@@ -1,0 +1,209 @@
+@use 'mixins/mixins' as *;
+@use 'global/var' as *;
+@use 'sass:color';
+
+@include b(button) {
+  // 基础样式
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 1;
+  cursor: pointer;
+  border: $border-width-base $border-style-base $color-info;
+  border-radius: $border-radius-base;
+  background-color: $color-white;
+  color: $color-text-primary;
+  font-weight: $font-weight-primary;
+  margin: $spacing-extra-small;
+  user-select: none;
+  transition: all $animation-duration-base $animation-timing-function-base;
+  transition-property: opacity, transform, background-color, border-color;
+
+  // 交互状态
+  &:hover:not(.is-disabled):not(.is-loading) {
+    opacity: 0.8;
+  }
+
+  &:active:not(.is-disabled):not(.is-loading) {
+    opacity: 1;
+  }
+
+  // 尺寸变体
+  @include m(small) {
+    padding: 0 $spacing-medium;
+    height: $component-size-small;
+    font-size: $font-size-small;
+  }
+
+  @include m(medium) {
+    padding: 0 $spacing-large;
+    height: $component-size-medium;
+    font-size: $font-size-base;
+  }
+
+  @include m(large) {
+    padding: 0 $spacing-extra-large;
+    height: $component-size-large;
+    font-size: $font-size-medium;
+  }
+
+  // 圆角样式
+  @include when(round) {
+    border-radius: $border-radius-round;
+  }
+
+  // Circle 样式
+  @include when(circle) {
+    border-radius: 50%;
+    padding: 0;
+    height: $component-size-medium;
+    width: $component-size-medium;
+
+    @include m(small) {
+      width: $component-size-small;
+      height: $component-size-small;
+    }
+    @include m(medium) {
+      width: $component-size-medium;
+      height: $component-size-medium;
+    }
+    @include m(large) {
+      width: $component-size-large;
+      height: $component-size-large;
+    }
+  }
+
+  @include when(icon-only) {
+    padding: 0 $spacing-small;
+
+
+    &.is-circle {
+      padding: 0;
+    }
+  }
+
+
+  // 默认状态（无type）样式
+  @include when(default) {
+    background-color: $color-white;
+    color: $color-text-primary;
+    border-color: $color-info;
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      color: $color-accent;
+      background-color: color.adjust($color-accent, $lightness: 30%);;
+      border-color: color.adjust($color-accent, $lightness: -10%);
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      color: $color-accent;
+      background-color: color.adjust($color-accent, $lightness: 30%);
+      border-color: $color-primary;
+    }
+
+    &.is-loading,
+    &.is-disabled {
+      cursor: not-allowed;
+      opacity: 0.8;
+      transition: none;
+      background-color: $background-color-light !important;
+      border-color: $border-color-light !important;
+
+      &:hover,
+      &:active {
+        background-color: $background-color-light !important;
+        border-color: $border-color-light !important;
+      }
+    }
+  }
+  // 类型变体
+  $variants: (
+          primary: $color-primary,
+          success: $color-success,
+          warning: $color-warning,
+          danger: $color-danger,
+          info: $color-info
+  );
+
+  @each $type, $color in $variants {
+    @include m(#{$type}) {
+      $hover-color: color.adjust($color, $lightness: 5%);
+      $active-color: color.adjust($color, $lightness: -15%);
+      @include button-variant($color-white, $color, $color, $hover-color, $active-color);
+
+      // 禁用和加载状态
+      &.is-loading,
+      &.is-disabled {
+        cursor: not-allowed;
+        opacity: 0.8;
+        transition: none;
+        background-color: color.adjust($color, $lightness: 8%) !important;
+        border-color: color.adjust($color, $lightness: 8%) !important;
+
+        &:hover,
+        &:active {
+          background-color: color.adjust($color, $lightness: 8%) !important;
+          border-color: color.adjust($color, $lightness: 8%) !important;
+        }
+      }
+    }
+  }
+  // Plain 样式
+  @include when(plain) {
+    background-color: transparent;
+
+    @each $type, $color in $variants {
+      &.lm-button--#{$type} {
+        color: $color;
+        border-color: $color;
+        background-color: transparent;
+
+        &:hover:not(.is-disabled):not(.is-loading) {
+          color: $color-white;
+          background-color: $color;
+          border-color: $color;
+        }
+
+        &:active:not(.is-disabled):not(.is-loading) {
+          color: $color-white;
+          background-color: color.adjust($color, $lightness: -10%);
+          border-color: color.adjust($color, $lightness: -10%);
+        }
+
+        &.is-disabled,
+        &.is-loading {
+          color: color.adjust($color, $lightness: 8%);
+          background-color: color.adjust($color, $lightness: 35%) !important;
+          border-color: color.adjust($color, $lightness: 5%);
+        }
+      }
+    }
+
+    // 默认状态下的 plain 样式
+    &.is-default {
+      color: $color-text-primary;
+      border-color: $color-info;
+      background-color: transparent;
+
+      &:hover:not(.is-disabled):not(.is-loading) {
+        color: $color-accent;
+        border-color: $color-accent;
+        background-color: transparent;
+      }
+
+      &:active:not(.is-disabled):not(.is-loading) {
+        color: $color-accent;
+        border-color: color.adjust($color-accent, $lightness: -10%);
+        background-color: transparent;
+      }
+
+      &.is-disabled,
+      &.is-loading {
+        color: color.adjust($color-black, $lightness: 33%);
+        border-color: $border-color-light;
+        background-color: transparent !important;
+      }
+    }
+  }
+}

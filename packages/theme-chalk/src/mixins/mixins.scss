@@ -1,0 +1,58 @@
+@use 'config' as *;
+@forward 'config';
+// .lm-index.md.md
+@mixin b($block) {
+  $B: $namespace+'-'+$block;
+  .#{$B} {
+    @content;
+  }
+}
+
+// .lm-index.md.md.is-xxx
+@mixin when($state) {
+  @at-root {
+    .#{$state-prefix+$state} {
+      @content;
+    }
+  }
+}
+
+// &--primary => .lm-index.md.md--primary
+@mixin m($modifier) {
+  @at-root {
+    #{&+$modifier-separator+$modifier} {
+      @content;
+    }
+  }
+}
+
+// &__header => .lm-button__header
+@mixin e($element) {
+  @at-root {
+    #{&+$element-separator+$element} {
+      @content;
+    }
+  }
+}
+
+@mixin button-variant(
+  $text-color,
+  $background-color,
+  $border-color,
+  $hover-bg-color,
+  $active-bg-color
+) {
+  color: $text-color;
+  background-color: $background-color;
+  border-color: $border-color;
+
+  &:hover {
+    background-color: $hover-bg-color;
+    border-color: $hover-bg-color;
+  }
+
+  &:active {
+    background-color: $active-bg-color;
+    border-color: $active-bg-color;
+  }
+}

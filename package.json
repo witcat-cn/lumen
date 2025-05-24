@@ -1,0 +1,26 @@
+{
+  "name": "lumen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -C preview dev",
+    "docs:dev": "pnpm -C docs dev --host"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.10.0",
+  "dependencies": {
+    "@lumen-ui/components": "workspace:^",
+    "@lumen-ui/theme-chalk": "workspace:^",
+    "@lumen-ui/utils": "workspace:^",
+    "typescript": "^5.8.3",
+    "vue": "^3.5.14"
+  },
+  "devDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "lucide-vue-next": "^0.511.0",
+    "sass": "^1.89.0"
+  }
+}

@@ -5,11 +5,8 @@ import { themeConfig } from './theme'
 import { enConfig } from './config/en'
 import { zhConfig } from './config/zh'
 import { resolve } from 'path'
-import { containerPreview, componentPreview } from '@vitepress-demo-preview/plugin'
+import { vitepressDemoPlugin } from 'vitepress-demo-plugin'
 
-const alias = {
-    '@': resolve(__dirname, '../../examples')
-}
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -18,17 +15,16 @@ export default defineConfig({
     themeConfig,
     markdown: {
         config(md) {
-            md.use(componentPreview, {alias})
-            md.use(containerPreview, {alias})
+            md.use(vitepressDemoPlugin, {
+                demoDir: resolve(__dirname, '../examples'),
+                lightTheme: 'github-light',
+                darkTheme: 'github-dark',
+            });
         },
     },
-    vite: {
-        resolve: {
-            alias
-        }
-    },
+    vite: {},
     locales: {
         root: {label: 'English', lang: 'en-US', link: '/', ...enConfig},
-        zh: {label: '简体中文', lang: 'zh-CN', link: '/zh', ...zhConfig}
-    }
+        zh: {label: '简体中文', lang: 'zh-CN', link: '/zh', ...zhConfig},
+    },
 })

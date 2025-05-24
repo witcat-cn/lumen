@@ -1,207 +1,180 @@
-import {ref, watch, onUnmounted, onMounted, nextTick, computed} from 'vue'
-import {createPopper, Instance as PopperInstance} from '@popperjs/core'
+import { ref, shallowRef, watch, onUnmounted, nextTick, computed, type Ref } from 'vue'
+import { createPopper, Instance as PopperInstance, type Placement, type Modifier } from '@popperjs/core'
 
 interface PopperProps {
-    text: string;
-    popper: string;
-    placement: 'top' | 'bottom' | 'left' | 'right';
-    offset: [number, number];
+    readonly text: string
+    readonly popper: string
+    readonly placement: Placement
+    readonly offset: readonly [number, number]
 }
 
-export function usePopper(props: PopperProps) {
+interface PopperRefs {
+    readonly showPopper: Ref<boolean>
+    readonly rootRef: Ref<HTMLElement | null>
+    readonly popperRef: Ref<HTMLElement | null>
+    readonly triggerRef: Ref<HTMLElement | null>
+    readonly arrowRef: Ref<HTMLElement | null>
+    readonly formattedContent: Ref<string>
+    readonly togglePopper: () => Promise<void>
+}
+
+const isHTMLElement = (el: unknown): el is HTMLElement => el instanceof HTMLElement
+
+const POPPER_CONFIG = {
+    ARROW_PADDING: 5,
+    VIEWPORT_PADDING: 8,
+    FALLBACK_PLACEMENTS: ['top', 'right', 'left', 'bottom'] as const,
+} as const
+
+export const usePopper = (props: PopperProps): PopperRefs => {
     const showPopper = ref(false)
-    const rootRef = ref<HTMLElement | null>(null)
-    const popperRef = ref<HTMLElement | null>(null)
-    const triggerRef = ref<HTMLElement | null>(null)
-    const arrowRef = ref<HTMLElement | null>(null)
+    const rootRef = shallowRef<HTMLElement | null>(null)
+    const popperRef = shallowRef<HTMLElement | null>(null)
+    const triggerRef = shallowRef<HTMLElement | null>(null)
+    const arrowRef = shallowRef<HTMLElement | null>(null)
 
     let popperInstance: PopperInstance | null = null
+    let clickHandler: ((e: MouseEvent) => void) | null = null
+    let isDestroyed = false
 
-    const formattedContent = computed(() => {
-        return props.popper.replace(/`([^`]+)`/g, '<code>$1</code>')
-    })
+    const formattedContent = computed(() =>
+        props.popper.replace(/`([^`]+)`/g, '<code>$1</code>'),
+    )
 
+    const getModifiers = (): Partial<Modifier<string, any>>[] => [
+        {
+            name: 'offset',
+            options: {offset: props.offset},
+        },
+        {
+            name: 'arrow',
+            options: {
+                element: arrowRef.value,
+                padding: POPPER_CONFIG.ARROW_PADDING,
+            },
+        },
+        {
+            name: 'computeStyles',
+            options: {gpuAcceleration: false},
+        },
+        {
+            name: 'preventOverflow',
+            options: {
+                boundary: 'viewport',
+                padding: POPPER_CONFIG.VIEWPORT_PADDING,
+            },
+        },
+        {
+            name: 'flip',
+            options: {fallbackPlacements: [...POPPER_CONFIG.FALLBACK_PLACEMENTS]},
+        },
+    ]
 
-    const initializePopper = (): void => {
-        if (!popperRef.value || !triggerRef.value) return
+    const getTriggerEl = () => {
+        const el = (triggerRef.value as any)?.$el ?? triggerRef.value
+        return isHTMLElement(el) ? el : null
+    }
 
-        if (!popperInstance) {
-            popperInstance = createPopper(triggerRef.value, popperRef.value, {
+    const initPopper = async (): Promise<boolean> => {
+        if (isDestroyed) return false
+
+        const popperEl = popperRef.value
+        const triggerEl = getTriggerEl()
+
+        if (!popperEl || !triggerEl) return false
+
+        try {
+            const options = {
                 placement: props.placement,
-                modifiers: [
-                    {
-                        name: 'offset',
-                        options: {
-                            offset: props.offset,
-                        },
-                    },
-                    {
-                        name: 'arrow',
-                        options: {
-                            element: arrowRef.value,
-                            padding: 5,
-                        },
-                    },
-                    {
-                        name: 'computeStyles',
-                        options: {
-                            gpuAcceleration: false, // 禁用 GPU 加速，有时可以避免一些渲染问题
-                        },
-                    },
-                    {
-                        name: 'preventOverflow', // 防止溢出
-                        options: {
-                            boundary: 'viewport', // 边界设置为视口
-                            padding: 8, // 距离视口边缘的最小距离
-                        },
-                    },
-                    {
-                        name: 'flip', // 自动翻转位置
-                        options: {
-                            fallbackPlacements: ['top', 'right', 'left', 'bottom'], // 翻转时的备选位置
-                        },
-                    },
-                ],
-            })
-        } else {
-            // 如果实例已存在，更新配置并强制更新位置
-            popperInstance.setOptions({
-                placement: props.placement,
-                modifiers: [
-                    {
-                        name: 'offset',
-                        options: {
-                            offset: props.offset,
-                        },
-                    },
-                    {
-                        name: 'arrow',
-                        options: {
-                            element: arrowRef.value,
-                            padding: 5,
-                        },
-                    },
-                    {
-                        name: 'computeStyles',
-                        options: {
-                            gpuAcceleration: false,
-                        },
-                    },
-                    {
-                        name: 'preventOverflow',
-                        options: {
-                            boundary: 'viewport',
-                            padding: 8,
-                        },
-                    },
-                    {
-                        name: 'flip',
-                        options: {
-                            fallbackPlacements: ['top', 'right', 'left', 'bottom'],
-                        },
-                    },
-                ],
-            })
-            popperInstance.update()
+                modifiers: getModifiers(),
+            }
+
+            if (popperInstance) {
+                await popperInstance.setOptions(options)
+                await popperInstance.update()
+            } else {
+                popperInstance = createPopper(triggerEl, popperEl, options)
+            }
+            return true
+        } catch {
+            return false
         }
     }
 
-    const destroyPopper = (): void => {
-        if (popperInstance) {
-            popperInstance.destroy()
-            popperInstance = null
-        }
+    const destroyPopper = () => {
+        popperInstance?.destroy()
+        popperInstance = null
     }
 
-    const togglePopper = async (): Promise<void> => {
+    const togglePopper = async () => {
+        if (isDestroyed) return
+
         showPopper.value = !showPopper.value
 
         if (showPopper.value) {
             await nextTick()
-            initializePopper()
+            const success = await initPopper()
+            if (!success) showPopper.value = false
         }
     }
 
-    const handleClickOutside = (event: MouseEvent): void => {
-        if (rootRef.value && !rootRef.value.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+        const target = e.target as Node
+        if (target && !rootRef.value?.contains(target)) {
             showPopper.value = false
         }
     }
 
-    watch(showPopper, (newValue) => {
-        if (newValue) {
-            setTimeout(() => {
-                document.addEventListener('click', handleClickOutside)
-            }, 0)
-        } else {
-            document.removeEventListener('click', handleClickOutside)
+    const addClickListener = async () => {
+        if (clickHandler || isDestroyed) return
+        clickHandler = handleClickOutside
+        await nextTick()
+        if (clickHandler && !isDestroyed) {
+            document.addEventListener('click', clickHandler, {passive: true})
         }
-    })
+    }
 
-    watch(() => [props.placement, props.offset], () => {
-        if (showPopper.value && popperInstance) {
-            nextTick(() => {
-                popperInstance?.setOptions({
-                    placement: props.placement,
-                    modifiers: [
-                        {
-                            name: 'offset',
-                            options: {
-                                offset: props.offset,
-                            },
-                        },
-                        {
-                            name: 'arrow',
-                            options: {
-                                element: arrowRef.value,
-                                padding: 5,
-                            },
-                        },
-                        {
-                            name: 'computeStyles',
-                            options: {
-                                gpuAcceleration: false,
-                            },
-                        },
-                        {
-                            name: 'preventOverflow',
-                            options: {
-                                boundary: 'viewport',
-                                padding: 8,
-                            },
-                        },
-                        {
-                            name: 'flip',
-                            options: {
-                                fallbackPlacements: ['top', 'right', 'left', 'bottom'],
-                            },
-                        },
-                    ],
-                })
-                popperInstance?.update()
-            })
+    const removeClickListener = () => {
+        if (clickHandler) {
+            document.removeEventListener('click', clickHandler)
+            clickHandler = null
         }
-    })
+    }
 
-    onMounted(() => {
-        // 组件挂载后不立即创建 popper 实例，等到显示时再创建
-        // 或者，如果希望在挂载后立即创建但不显示，可以在这里调用 initializePopper()
-        // 但为了避免不必要的性能开销，延迟创建是更好的选择。
-    })
+    // 监听器
+    const stopWatchers = [
+        watch(showPopper, (show) => {
+            show ? addClickListener() : removeClickListener()
+        }),
+
+        watch(
+            () => [props.placement, props.offset] as const,
+            async () => {
+                if (showPopper.value && popperInstance && !isDestroyed) {
+                    await nextTick()
+                    try {
+                        await popperInstance.setOptions({
+                            placement: props.placement,
+                            modifiers: getModifiers(),
+                        })
+                        await popperInstance.update()
+                    } catch {
+                        showPopper.value = false
+                    }
+                }
+            },
+            {deep: true},
+        ),
+    ]
 
     onUnmounted(() => {
-        document.removeEventListener('click', handleClickOutside)
-        // 组件卸载时销毁 Popper 实例
+        isDestroyed = true
+        stopWatchers.forEach(stop => stop())
+        removeClickListener()
         destroyPopper()
     })
 
     return {
-        showPopper,
-        rootRef,
-        popperRef,
-        triggerRef,
-        arrowRef,
-        formattedContent,
-        togglePopper
-    }
+        showPopper, rootRef, popperRef, triggerRef, arrowRef, formattedContent, togglePopper
+    } as const
 }

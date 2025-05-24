@@ -1,17 +1,33 @@
 @use 'sass:color';
 
-// 变量定义
+// ===== 变量定义 =====
 $primary-color: #0062FF;
+$primary-color-light: color.adjust($primary-color, $lightness: 10%);
+$primary-color-lighter: color.adjust($primary-color, $lightness: 20%);
+$primary-color-lightest: color.adjust($primary-color, $lightness: 35%);
+
 $border-radius-sm: 8px;
 $border-radius-md: 10px;
 $border-radius-lg: 12px;
 $border-radius-xl: 20px;
-* {
+
+$font-size-xs: 12px;
+$font-size-sm: 14px;
+$font-size-md: 16px;
+$font-size-xl: 3rem;
+
+$spacing-xs: 2px;
+$spacing-sm: 6px;
+$spacing-md: 12px;
+$spacing-lg: 24px;
+
+// ===== 全局样式 =====
+html {
   outline: none;
   -webkit-tap-highlight-color: transparent;
 }
 
-// Mixins
+// ===== Mixins =====
 @mixin reset-button-style {
   border: none !important;
   padding: 0 !important;
@@ -44,25 +60,79 @@ $border-radius-xl: 20px;
   color: var(--custom-block-note-left);
 }
 
-// 通用文档样式
+@mixin nav-icon($svg-content) {
+  content: '';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  width: 1em;
+  height: 1em;
+  background-image: url($svg-content);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@mixin transparent-bg {
+  background-color: transparent;
+  border: none !important;
+}
+
+// ===== 文档内容样式 =====
 .VPDoc {
   p {
-    font-size: 14px;
-    margin: 2px;
-    font-weight: 400;
+    font-size: $font-size-sm;
+    font-weight: 500;
   }
 
+
+  h1, h2 {
+    border-top: none;
+    padding: 0;
+    margin: $spacing-lg 0 $spacing-lg;
+  }
+
+  // 内联代码样式
+  :not(pre) > code {
+    color: var(--color-primary-light-3) !important;
+  }
+
+  // 代码块样式重置
+  pre code {
+    color: inherit !important;
+  }
+
+  .content {
+    border: none !important;
+
+    .content-container {
+      min-width: 52em;
+    }
+
+    .outline-marker {
+      left: 1px;
+      width: 5px;
+      background-color: $primary-color;
+      border-radius: $border-radius-lg;
+    }
+  }
+
+  .aside {
+    width: 180px !important;
+  }
 
   // 表格样式
   table,
   .VPContent table {
     border-collapse: collapse;
     width: 100%;
-    margin: .5em 0;
+    margin: 0.5em 0;
     display: table;
     border-bottom: 1px solid var(--vp-c-divider);
 
-    th, td {
+    th,
+    td {
       @include table-cell-style;
     }
 
@@ -73,17 +143,23 @@ $border-radius-xl: 20px;
     tr:nth-child(even) {
       background-color: transparent;
     }
+
+    // 表格内代码样式
+    td code,
+    th code {
+      @include code-style;
+    }
   }
 
-  // 表格内代码样式
-  table td code,
-  table th code,
-  .VPContent table td code,
-  .VPContent table th code {
-    @include code-style;
+  .VPContent table {
+    td code,
+    th code {
+      @include code-style;
+    }
   }
 }
 
+// ===== 通用组件样式 =====
 .divider-line {
   background-color: transparent !important;
 }
@@ -92,25 +168,41 @@ $border-radius-xl: 20px;
   border-bottom: none !important;
 }
 
-// 首页样式
-.VPHome .VPHero {
-  @include flex-center;
+// ===== 大纲样式 =====
+.VPDocOutlineItem {
+  .outline-link {
+    font-size: $font-size-xs;
+    font-weight: 800;
+    color: var(--vp-c-text-1);
 
-  .text {
-    font-size: 16px;
-    font-weight: normal;
-  }
-
-  .heading {
-    align-items: center;
-  }
-
-  .name.clip {
-    font-size: 3rem;
-    -webkit-text-fill-color: color.adjust($primary-color, $lightness: 10%) !important;
+    &:hover {
+      color: $primary-color !important;
+    }
   }
 }
 
+// ===== 首页样式 =====
+.VPHome {
+  .VPHero {
+    @include flex-center;
+
+    .text {
+      font-size: $font-size-md;
+      font-weight: normal;
+    }
+
+    .heading {
+      align-items: center;
+    }
+
+    .name.clip {
+      font-size: $font-size-xl;
+      -webkit-text-fill-color: $primary-color-light !important;
+    }
+  }
+}
+
+// ===== 导航栏样式 =====
 .VPNavBarTitle {
   .title {
     border-bottom-color: transparent !important;
@@ -143,10 +235,9 @@ $border-radius-xl: 20px;
 
   .DocSearch-Button {
     height: 2rem;
-    margin: .3rem;
+    margin: 0.3rem;
     border-radius: $border-radius-xl;
     background-color: transparent;
-
 
     &:hover {
       border: 1px solid $primary-color !important;
@@ -155,25 +246,22 @@ $border-radius-xl: 20px;
   }
 }
 
-// 链接和特性卡片
+// ===== 链接和特性卡片 =====
 .VPLink {
-  border: none !important;
+  @include transparent-bg;
 
   ::v-deep(.VPFeature) {
     display: block;
-    border-radius: 12px;
-    background-color: transparent;
-    border: none !important;
+    border-radius: $border-radius-lg;
+    @include transparent-bg;
   }
 
   .box {
-    background-color: transparent;
-    border: none !important;
+    @include transparent-bg;
   }
 }
 
-
-// 侧边栏样式
+// ===== 侧边栏样式 =====
 .VPSidebar {
   background-color: var(--vp-c-bg) !important;
 
@@ -182,22 +270,24 @@ $border-radius-xl: 20px;
     border: none;
   }
 
-  .item h2.text,
-  .item h3.text {
-    font-size: 16px;
-    font-weight: 800;
-    color: var(--vp-c-text-1) !important;
+  .item {
+    h2.text,
+    h3.text {
+      font-size: $font-size-md;
+      font-weight: 800;
+      color: var(--vp-c-text-1) !important;
+    }
   }
 
   .VPLink.link .text {
-    font-size: 12px;
-    text-indent: 12px;
+    font-size: $font-size-xs;
+    text-indent: $spacing-md;
     font-weight: 600;
     color: var(--vp-c-text-1) !important;
-  }
 
-  .VPLink.link .text:hover {
-    color: $primary-color !important;
+    &:hover {
+      color: $primary-color !important;
+    }
   }
 }
 
@@ -212,12 +302,13 @@ $border-radius-xl: 20px;
     padding-left: 0 !important;
   }
 
-  .is-link.is-active.has-active,
-  .is-link.is-active.has-active .text {
-    color: $primary-color !important;
-    background-color: color.adjust($primary-color, $lightness: 32%) !important;
+  .is-link.is-active.has-active {
+    &,
+    .text {
+      color: $primary-color !important;
+      background-color: $primary-color-lightest !important;
+    }
   }
-
 
   &.is-active.has-active {
     border-radius: $border-radius-sm;
@@ -225,58 +316,68 @@ $border-radius-xl: 20px;
   }
 
   .item {
-    padding: 6px;
+    padding: $spacing-sm;
   }
 }
 
-// 底部导航
-.VPDocFooter .prev-next {
-  @include flex-between;
-  width: 100%;
-  padding: 24px 0;
+// ===== 底部导航 =====
+.VPDocFooter {
+  .prev-next {
+    @include flex-between;
+    width: 100%;
+    padding: $spacing-lg 0;
 
-  .pager-link {
-    @include reset-button-style;
-    display: flex;
-    align-items: center;
+    .pager-link {
+      @include reset-button-style;
+      display: flex;
+      align-items: center;
 
-    .title {
-      color: $primary-color !important;
-    }
+      .title {
+        color: $primary-color !important;
 
+        &:hover {
+          color: $primary-color-lighter !important;
+        }
+      }
 
-    .title:hover {
-      color: color.adjust($primary-color, $lightness: 20%) !important;
-    }
+      .desc {
+        display: none;
+      }
 
-    .desc {
-      display: none;
-    }
+      &.next .title::after {
+        @include nav-icon("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M269.95 147.94c0-14.88 11.9-28.27 23.31-39.68 11.9-11.9 37.2-37.2 63.49-11.9l377.95 377.95c8.93 8.93 19.84 22.82 19.84 37.7s-10.91 28.77-19.84 37.7L366.75 960.24c-10.42 10.42-21.82 13.39-34.22 8.93-9.42-3.47-18.35-11.41-28.77-21.82-14.38-14.38-21.82-28.77-21.82-41.17 0-7.94 2.98-15.87 9.42-21.82L621.12 512 281.36 171.74c-7.44-7.44-11.41-15.38-11.41-23.8z' fill='%230062FF'/%3E%3C/svg%3E");
+        margin-left: 5px;
+      }
 
-    &.next .title::after {
-      content: '';
-      display: inline-flex;
-      width: 1em;
-      height: 1em;
-      margin-left: 5px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M269.95 147.94c0-14.88 11.9-28.27 23.31-39.68 11.9-11.9 37.2-37.2 63.49-11.9l377.95 377.95c8.93 8.93 19.84 22.82 19.84 37.7s-10.91 28.77-19.84 37.7L366.75 960.24c-10.42 10.42-21.82 13.39-34.22 8.93-9.42-3.47-18.35-11.41-28.77-21.82-14.38-14.38-21.82-28.77-21.82-41.17 0-7.94 2.98-15.87 9.42-21.82L621.12 512 281.36 171.74c-7.44-7.44-11.41-15.38-11.41-23.8z' fill='%230062FF'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      vertical-align: middle;
-    }
-
-    &.prev .title::before {
-      content: '';
-      display: inline-flex;
-      width: 1em;
-      height: 1em;
-      margin-right: 5px;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M753.29 874.92c0 14.83-11.87 28.18-23.24 39.56-11.87 11.87-37.08 37.08-63.29 11.87L290 539.61c-8.9-8.9-19.78-22.74-19.78-37.58s10.88-28.68 19.78-37.58L666.76 97.66c10.38-10.38 21.76-13.35 34.12-8.9 9.39 3.46 18.29 11.37 28.68 21.76 14.34 14.34 21.76 28.68 21.76 41.04 0 7.91-2.97 15.82-9.39 21.76L403.22 512l339.19 339.19c6.92 7.42 10.88 15.33 10.88 23.73z' fill='%230062FF'/%3E%3C/svg%3E");
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      vertical-align: middle;
+      &.prev .title::before {
+        @include nav-icon("data:image/svg+xml,%3Csvg viewBox='0 0 1024 1024' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M753.29 874.92c0 14.83-11.87 28.18-23.24 39.56-11.87 11.87-37.08 37.08-63.29 11.87L290 539.61c-8.9-8.9-19.78-22.74-19.78-37.58s10.88-28.68 19.78-37.58L666.76 97.66c10.38-10.38 21.76-13.35 34.12-8.9 9.39 3.46 18.29 11.37 28.68 21.76 14.34 14.34 21.76 28.68 21.76 41.04 0 7.91-2.97 15.82-9.39 21.76L403.22 512l339.19 339.19c6.92 7.42 10.88 15.33 10.88 23.73z' fill='%230062FF'/%3E%3C/svg%3E");
+        margin-right: 5px;
+      }
     }
   }
+}
+
+// ===== 搜索框样式 =====
+.VPLocalSearchBox {
+  .shell .search-bar {
+    border: 1px solid $primary-color !important;
+  }
+}
+
+// ===== 开关样式 =====
+.VPSwitch {
+  border: var(--background-color-light) 1px solid;
+
+  &:hover {
+    border: $primary-color 1px solid !important;
+  }
+}
+
+.vitepress-demo-plugin__container {
+  border-radius: .5em !important;
+}
+
+.vitepress-demo-plugin-description__handle-btn {
+  padding: 2em;
+  justify-content: flex-end !important;
 }

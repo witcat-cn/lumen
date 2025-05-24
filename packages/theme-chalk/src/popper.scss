@@ -15,23 +15,18 @@
   @include e(button) {
     border: none;
     font-size: 12px;
-    color: var(--border-color-base);
     cursor: pointer;
     background: transparent;
     padding: 2px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    &:hover {
-      border-radius: 4px;
-      background-color: var(--border-color-light);
-    }
+    will-change: transform;
   }
 
   @include e(content) {
     background-color: var(--background-color-light);
-    color: var(--color-text-primary);
+    color: var(--color-accent-light-5);
     padding: 8px 10px;
     border: 1px solid var(--border-color-light);
     border-radius: 8px;
@@ -40,11 +35,6 @@
     max-width: 300px;
     overflow-wrap: break-word;
     visibility: visible;
-
-    .dark & {
-      background-color: var(--dark-background-color-light);
-      color: var(--dark-color-text-primary);
-    }
 
     :deep(code) {
       padding: 2px 4px;

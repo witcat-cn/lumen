@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import { Search, SquarePen, Check, Mail, Star, Trash2 } from 'lucide-vue-next'
-import Loading from "@lumen-ui/components/internal-icon/Loading.vue";
 </script>
 
 <template>
-  <div class="mb-4">
+  <div class="mb-2">
     <lm-button>Default</lm-button>
-    <lm-button type="primary" loading>Primary</lm-button>
+    <lm-button type="primary">Primary</lm-button>
     <lm-button type="success">Success</lm-button>
     <lm-button type="warning">Warning</lm-button>
     <lm-button type="danger">Danger</lm-button>
     <lm-button type="info">Info</lm-button>
   </div>
-  <div class="mb-4">
+  <div class="mb-2">
     <lm-button plain>Plain</lm-button>
     <lm-button type="primary" plain>Primary</lm-button>
     <lm-button type="success" plain>Success</lm-button>
@@ -20,7 +19,7 @@ import Loading from "@lumen-ui/components/internal-icon/Loading.vue";
     <lm-button type="danger" plain>Danger</lm-button>
     <lm-button type="info" plain>Info</lm-button>
   </div>
-  <div class="mb-4">
+  <div class="mb-2">
     <lm-button round>Default</lm-button>
     <lm-button type="primary" round>Primary</lm-button>
     <lm-button type="success" round>Success</lm-button>
@@ -29,7 +28,7 @@ import Loading from "@lumen-ui/components/internal-icon/Loading.vue";
     <lm-button type="info" round>Info</lm-button>
   </div>
 
-  <div class="mb-4">
+  <div class="mb-2">
     <lm-button :icon="Search" circle/>
     <lm-button type="primary" :icon="SquarePen" circle/>
     <lm-button type="success" :icon="Check" circle/>
@@ -38,7 +37,3 @@ import Loading from "@lumen-ui/components/internal-icon/Loading.vue";
     <lm-button type="danger" :icon="Trash2" circle/>
   </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>

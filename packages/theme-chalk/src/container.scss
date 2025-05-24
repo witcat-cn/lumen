@@ -1,0 +1,18 @@
+@use 'mixins/mixins' as *;
+
+@include b(container) {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: var(--spacing-base);
+  background-color: transparent;
+  border-radius: var(--border-radius-base);
+
+  @include m(horizontal) {
+    flex-direction: row;
+  }
+
+  @include m(vertical) {
+    flex-direction: column;
+  }
+}

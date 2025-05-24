@@ -34,25 +34,3 @@
     }
   }
 }
-
-@mixin button-variant(
-  $text-color,
-  $background-color,
-  $border-color,
-  $hover-bg-color,
-  $active-bg-color
-) {
-  color: $text-color;
-  background-color: $background-color;
-  border-color: $border-color;
-
-  &:hover {
-    background-color: $hover-bg-color;
-    border-color: $hover-bg-color;
-  }
-
-  &:active {
-    background-color: $active-bg-color;
-    border-color: $active-bg-color;
-  }
-}

@@ -1,10 +1,9 @@
 <script setup lang="ts">
-
 import { Search, SquarePen, Trash2, Share, Upload } from 'lucide-vue-next'
 </script>
 
 <template>
-  <div class="mb-4">
+  <div class="mb-2">
     <lm-button type="primary" :icon="SquarePen"/>
     <lm-button type="primary" :icon="Share"/>
     <lm-button type="primary" :icon="Trash2"/>
@@ -13,7 +12,3 @@ import { Search, SquarePen, Trash2, Share, Upload } from 'lucide-vue-next'
   </div>
 
 </template>
-
-<style scoped lang="scss">
-
-</style>

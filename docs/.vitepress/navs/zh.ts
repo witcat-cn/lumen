@@ -7,6 +7,6 @@ export const getNavbar = (): DefaultTheme.NavItem[] => [
     },
     {
         text: '组件',
-        link: '/zh/components/overview'
+        link: '/zh/components'
     }
 ]

@@ -1,42 +1,20 @@
 <template>
-  <span ref="rootRef" :class="[
-    bem.b(),
-    bem.is('visible', showPopper)
-  ]">
+  <span ref="rootRef" :class="[bem.b(),bem.is('visible', showPopper)]">
     <span :class="bem.e('text')">{{ props.text }}</span>
-    <button
-        ref="triggerRef"
-        :class="bem.e('button')"
-        @click.stop="togglePopper"
-    >
-      <lm-icon size="20">
-        <Info/>
-      </lm-icon>
-    </button>
+    <lm-button  :icon="Info" ref="triggerRef" :class="bem.e('button')" @click.stop="togglePopper" circle/>
     <transition name="fade">
-      <div
-          v-show="showPopper"
-          ref="popperRef"
-          :class="[
-            bem.e('content'),
-            bem.m(props.placement)
-          ]"
-      >
+      <div v-show="showPopper" ref="popperRef" :class="[ bem.e('content'),bem.m(props.placement)]">
         <span :class="bem.e()" v-html="formattedContent"></span>
-        <div
-            ref="arrowRef"
-            :class="bem.e('arrow')"
-            data-popper-arrow
-        ></div>
+        <div ref="arrowRef" :class="bem.e('arrow')" data-popper-arrow></div>
       </div>
     </transition>
   </span>
 </template>
 
 <script setup lang="ts">
-import { Info } from 'lucide-vue-next'
-import { createNamespace } from '@lumen-ui/utils/create'
-import { usePopper } from './popper'
+import {Info} from 'lucide-vue-next'
+import {createNamespace} from '@lumen-ui/utils/create'
+import {usePopper} from './popper'
 
 const bem = createNamespace('popper')
 

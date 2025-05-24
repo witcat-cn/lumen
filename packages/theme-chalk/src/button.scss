@@ -13,7 +13,8 @@
   line-height: 1;
   cursor: pointer;
   outline: none;
-  -webkit-tap-highlight-color: transparent;
+  border-color: currentColor;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   border: var(--border-width-base) var(--border-style-base) var(--color-info);
   border-radius: var(--border-radius-base);
   background-color: var(--color-white);
@@ -21,8 +22,16 @@
   font-weight: var(--font-weight-primary);
   margin: var(--spacing-extra-small);
   user-select: none;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
   transition: all var(--animation-duration-base) var(--animation-timing-function-base);
   transition-property: opacity, transform, background-color, border-color;
+
+  .loading-icon {
+    display: inline-block;
+    animation: rotate 1s linear infinite;
+    -webkit-animation: rotate 1s linear infinite;
+  }
 
   // 尺寸变体
   @include m(small) {
@@ -52,13 +61,20 @@
   @include when(circle) {
     border-radius: var(--border-radius-circle);
     padding: 0;
-    height: var(--component-size-medium);
-    width: var(--component-size-medium);
+    aspect-ratio: 1 / 1;
+    @supports not (aspect-ratio: 1/1) {
+      &::before {
+        content: '';
+        float: left;
+        padding-top: 100%;
+      }
+    }
 
     @include m(small) {
       width: var(--component-size-small);
       height: var(--component-size-small);
     }
+
     @include m(medium) {
       width: var(--component-size-medium);
       height: var(--component-size-medium);
@@ -83,20 +99,16 @@
     color: var(--color-text-primary);
     border-color: var(--color-info);
 
-    @media (prefers-color-scheme: dark) {
-      color: var(--color-text-primary);
-    }
-
     @media (hover: hover) {
       &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
-        color: var(--color-accent) !important;
+        color: var(--color-accent);
         background-color: rgba(var(--color-primary-rgb), 0.1);
-        border-color: var(--color-accent-light-5);
+        border-color: var(--color-accent-light-3);
       }
     }
     &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
-      color: var(--color-accent) !important;
-      border-color: var(--color-accent-light-7);
+      color: var(--color-accent);
+      border-color: var(--color-accent-dark-2);
     }
 
     &.#{$state-prefix}loading,
@@ -133,14 +145,16 @@
       &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
         background-color: color.adjust($color-base, $lightness: -10%);
         border-color: color.adjust($color-base, $lightness: -10%);
+        transition: none !important;
+        opacity: 0.8;
       }
 
       &.#{$state-prefix}loading,
       &.#{$state-prefix}disabled {
         cursor: not-allowed;
         transition: none;
-        background-color: color.adjust($color-base, $lightness: 15%);
-        border-color: color.adjust($color-base, $lightness: 15%);
+        background-color: color.adjust($color-base, $lightness: 5%);
+        border-color: color.adjust($color-base, $lightness: 5%);
         opacity: 0.5;
       }
     }
@@ -148,8 +162,6 @@
 
   // Plain 样式
   @include when(plain) {
-    background-color: transparent;
-
     @each $type, $color-base in $variants {
       &.#{$namespace}-button--#{$type} {
         color: $color-base;
@@ -166,14 +178,16 @@
 
         &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
           color: var(--color-white);
-          background-color: color.adjust($color-base, $lightness: -10%);
-          border-color: color.adjust($color-base, $lightness: -10%);
+          background-color: color.adjust($color-base, $lightness: 10%);
+          border-color: color.adjust($color-base, $lightness: 10%);
+          transition: none !important;
+          opacity: 0.8;
         }
 
         &.#{$state-prefix}disabled,
         &.#{$state-prefix}loading {
           color: color.adjust($color-base, $lightness: 15%);
-          background-color: var(--color-white);
+          background-color: rgba(var(--color-#{$type}-rgb), 0.1);
           border-color: color.adjust($color-base, $lightness: 15%);
         }
       }
@@ -187,16 +201,14 @@
 
       @media (hover: hover) {
         &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
-          color: var(--color-primary) !important;
-          border-color: var(--color-primary);
-          background-color: transparent !important;
+          background-color: transparent;
+          border-color: #{color.adjust($color-primary, $lightness: 10%)};
         }
       }
 
       &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
-        color: var(--color-primary) !important;
-        border-color: var(--color-primary);
-        background-color: transparent !important;
+        border-color: #{color.adjust($color-primary, $lightness: 10%)};
+        background-color: transparent;
       }
     }
   }

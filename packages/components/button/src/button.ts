@@ -1,4 +1,4 @@
-import type { Component, ExtractPropTypes, PropType } from 'vue'
+import type {Component, ExtractPropTypes, PropType} from 'vue'
 
 export type ButtonType = 'primary' | 'success' | 'warning' | 'danger' | 'info'
 export type ButtonSize = 'small' | 'medium' | 'large'
@@ -23,6 +23,10 @@ export const buttonProps = {
         default: undefined
     },
     loading: Boolean,
+    loadingIcon: {
+        type: [String, Function] as PropType<string | (() => Component)>,
+        default: undefined
+    },
     disabled: Boolean,
     nativeType: {
         type: String as PropType<NativeType>,

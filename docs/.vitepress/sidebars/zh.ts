@@ -7,6 +7,7 @@ export const sidebar = [
                 items: [
                     {text: 'Button 按钮', link: '/zh/components/button'},
                     {text: 'Icon   图标', link: '/zh/components/icon'},
+                    {text: 'Container 布局容器', link: '/zh/components/container'},
                 ]
             },
         ]

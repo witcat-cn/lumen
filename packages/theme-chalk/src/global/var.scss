@@ -25,6 +25,44 @@ $dark-border-color-light: #44444F;
 $dark-background-color-code: #2A2A32;
 $dark-background-color-darker: #202027;
 
+// 新增：更丰富的暗黑模式颜色
+$dark-color-text-light: #E8E8F0;
+$dark-color-text-muted: #B8B8C5;
+$dark-color-text-subtle: #8A8A97;
+$dark-background-color-elevated: #323239;
+$dark-background-color-overlay: #3A3A42;
+$dark-background-color-surface: #252530;
+$dark-background-color-card: #2F2F38;
+$dark-border-color-base: #3A3A42;
+$dark-border-color-subtle: #2F2F38;
+$dark-border-color-emphasis: #5A5A67;
+
+// 新增：暗黑模式状态颜色
+$dark-color-primary: #4A90FF;
+$dark-color-primary-hover: #6BA3FF;
+$dark-color-primary-active: #2E7EFF;
+$dark-color-success: #52D996;
+$dark-color-success-hover: #73E4AB;
+$dark-color-success-active: #31C27C;
+$dark-color-warning: #FFB366;
+$dark-color-warning-hover: #FFC485;
+$dark-color-warning-active: #FF974A;
+$dark-color-danger: #FF7A7A;
+$dark-color-danger-hover: #FF9999;
+$dark-color-danger-active: #FC5A5A;
+$dark-color-info: #A8A8B5;
+$dark-color-info-hover: #BBBBC8;
+$dark-color-info-active: #92929D;
+
+// 新增：暗黑模式功能颜色
+$dark-color-link: #6BA3FF;
+$dark-color-link-hover: #8AB8FF;
+$dark-color-focus: #4A90FF;
+$dark-color-selection: rgba(74, 144, 255, 0.2);
+$dark-color-highlight: rgba(255, 179, 102, 0.15);
+$dark-color-code-bg: #1E1E26;
+$dark-color-code-border: #2A2A32;
+
 // 边框颜色
 $border-color-base: #44444F;
 $border-color-light: #E2E2EA;
@@ -74,12 +112,12 @@ $spacing-large: 18px;
 $spacing-extra-large: 32px;
 
 // 动画
-$animation-duration-base: 0.3s;
-$animation-duration-fast: 0.3s;
+$animation-duration-base: 0.12s;
+$animation-duration-fast: 0.12s;
 $animation-timing-function-base: ease-in-out;
 
 // 组件尺寸
-$component-size-large: 40px;
+$component-size-large: 36px;
 $component-size-medium: 32px;
 $component-size-small: 24px;
 
@@ -98,7 +136,6 @@ $z-index-notification: 2090;
   // 颜色通道
   --color-primary-rgb: #{color.channel($color-primary, "red", $space: rgb)}, #{color.channel($color-primary, "green", $space: rgb)}, #{color.channel($color-primary, "blue", $space: rgb)};
   --color-success-rgb: #{color.channel($color-success, "red", $space: rgb)}, #{color.channel($color-success, "green", $space: rgb)}, #{color.channel($color-success, "blue", $space: rgb)};
-  --color-warning-rgb: #{color.channel($color-warning, "red", $space: rgb)}, #{color.channel($color-warning, "green", $space: rgb)}, #{color.channel($color-warning, "blue", $space: rgb)};
   --color-danger-rgb: #{color.channel($color-danger, "red", $space: rgb)}, #{color.channel($color-danger, "green", $space: rgb)}, #{color.channel($color-danger, "blue", $space: rgb)};
   --color-info-rgb: #{color.channel($color-info, "red", $space: rgb)}, #{color.channel($color-info, "green", $space: rgb)}, #{color.channel($color-info, "blue", $space: rgb)};
 
@@ -134,7 +171,9 @@ $z-index-notification: 2090;
   --color-info-dark-2: #{color.adjust($color-info, $lightness: -10%)};
 
   --color-accent: #{$color-accent};
-  --color-accent-light-3: #{color.adjust($color-accent, $lightness: 30%)};
+  --color-accent-light: #{color.adjust($color-accent, $lightness: 45%)};
+  --color-accent-light-1: #{color.adjust($color-accent, $lightness: 35%)};
+  --color-accent-light-3: #{color.adjust($color-accent, $lightness: 25%)};
   --color-accent-light-5: #{color.adjust($color-accent, $lightness: 15%)};
   --color-accent-light-7: #{color.adjust($color-accent, $lightness: 1%)};
   --color-accent-dark-2: #{color.adjust($color-accent, $lightness: -10%)};
@@ -218,35 +257,102 @@ $z-index-notification: 2090;
   --z-index-notification: #{$z-index-notification};
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    // 文本颜色
-    --color-text-primary: #{$dark-color-text-primary};
-    --color-text-regular: #{$dark-color-text-primary};
-    --color-text-secondary: #{$dark-background-color-code};
-    --color-text-placeholder: #{$dark-background-color-darker};
-    --color-text-disabled: #{color.adjust($dark-color-text-primary, $lightness: 40%)};
+.dark {
+  // 文本颜色
+  --color-text-primary: #{$dark-color-text-primary};
+  --color-text-regular: #{$dark-color-text-light};
+  --color-text-secondary: #{$dark-color-text-muted};
+  --color-text-placeholder: #{$dark-color-text-subtle};
+  --color-text-disabled: #{color.adjust($dark-color-text-primary, $lightness: -40%)};
 
-    // 品牌色
-    --color-primary: #{color.adjust($color-primary, $lightness: -35%)};
-    --color-success: #{color.adjust($color-success, $lightness: -35%)};
-    --color-warning: #{color.adjust($color-warning, $lightness: -35%)};
-    --color-danger: #{color.adjust($color-danger, $lightness: -35%)};
-    --color-info: #{color.adjust($color-info, $lightness: -35%)};
+  // 新增：更多文本颜色层级
+  --color-text-light: #{$dark-color-text-light};
+  --color-text-muted: #{$dark-color-text-muted};
+  --color-text-subtle: #{$dark-color-text-subtle};
 
-    // 背景颜色
-    --background-color-base: #{$dark-background-color-base};
-    --background-color-light: #{$dark-background-color-light};
-    --background-color-darker: #{$dark-background-color-darker};
-    --background-color-code: #{$dark-background-color-code};
+  // 品牌色 - 使用专门的暗黑模式颜色
+  --color-primary: #{$dark-color-primary};
+  --color-primary-hover: #{$dark-color-primary-hover};
+  --color-primary-active: #{$dark-color-primary-active};
+  --color-primary-light-3: #{color.adjust($dark-color-primary, $lightness: 8%)};
+  --color-primary-light-5: #{color.adjust($dark-color-primary, $lightness: 15%)};
+  --color-primary-light-7: #{color.adjust($dark-color-primary, $lightness: 25%)};
+  --color-primary-dark-2: #{color.adjust($dark-color-primary, $lightness: -10%)};
 
-    // 边框颜色
-    --border-color-base: #{$dark-border-color-light};
-    --border-color-light: #{color.adjust($dark-border-color-light, $lightness: 10%)};
-    --border-color-lighter: #{color.adjust($dark-border-color-light, $lightness: 20%)};
+  --color-success: #{$dark-color-success};
+  --color-success-hover: #{$dark-color-success-hover};
+  --color-success-active: #{$dark-color-success-active};
+  --color-success-light-3: #{color.adjust($dark-color-success, $lightness: 8%)};
+  --color-success-light-5: #{color.adjust($dark-color-success, $lightness: 15%)};
+  --color-success-light-7: #{color.adjust($dark-color-success, $lightness: 25%)};
+  --color-success-dark-2: #{color.adjust($dark-color-success, $lightness: -10%)};
 
-    // 阴影
-    --box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 6px rgba(0, 0, 0, 0.2);
-    --box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+  --color-warning: #{$dark-color-warning};
+  --color-warning-hover: #{$dark-color-warning-hover};
+  --color-warning-active: #{$dark-color-warning-active};
+  --color-warning-light-3: #{color.adjust($dark-color-warning, $lightness: 8%)};
+  --color-warning-light-5: #{color.adjust($dark-color-warning, $lightness: 15%)};
+  --color-warning-light-7: #{color.adjust($dark-color-warning, $lightness: 25%)};
+  --color-warning-dark-2: #{color.adjust($dark-color-warning, $lightness: -10%)};
+
+  --color-danger: #{$dark-color-danger};
+  --color-danger-hover: #{$dark-color-danger-hover};
+  --color-danger-active: #{$dark-color-danger-active};
+  --color-danger-light-3: #{color.adjust($dark-color-danger, $lightness: 8%)};
+  --color-danger-light-5: #{color.adjust($dark-color-danger, $lightness: 15%)};
+  --color-danger-light-7: #{color.adjust($dark-color-danger, $lightness: 25%)};
+  --color-danger-dark-2: #{color.adjust($dark-color-danger, $lightness: -10%)};
+
+  --color-info: #{$dark-color-info};
+  --color-info-hover: #{$dark-color-info-hover};
+  --color-info-active: #{$dark-color-info-active};
+  --color-info-light-3: #{color.adjust($dark-color-info, $lightness: 8%)};
+  --color-info-light-5: #{color.adjust($dark-color-info, $lightness: 15%)};
+  --color-info-light-7: #{color.adjust($dark-color-info, $lightness: 25%)};
+  --color-info-dark-2: #{color.adjust($dark-color-info, $lightness: -10%)};
+
+  // 新增：功能颜色
+  --color-link: #{$dark-color-link};
+  --color-link-hover: #{$dark-color-link-hover};
+  --color-focus: #{$dark-color-focus};
+  --color-selection: #{$dark-color-selection};
+  --color-highlight: #{$dark-color-highlight};
+
+  // 背景颜色 - 更丰富的层级
+  --background-color-base: #{$dark-background-color-base};
+  --background-color-light: #{$dark-background-color-light};
+  --background-color-darker: #{$dark-background-color-darker};
+  --background-color-elevated: #{$dark-background-color-elevated};
+  --background-color-overlay: #{$dark-background-color-overlay};
+  --background-color-surface: #{$dark-background-color-surface};
+  --background-color-card: #{$dark-background-color-card};
+  --background-color-code: #{$dark-color-code-bg};
+
+  // 边框颜色 - 更好的层次感
+  --border-color-base: #{$dark-border-color-base};
+  --border-color-light: #{$dark-border-color-emphasis};
+  --border-color-lighter: #{$dark-border-color-subtle};
+  --border-color-extra-light: #{$dark-border-color-subtle};
+  --border-color-subtle: #{$dark-border-color-subtle};
+  --border-color-emphasis: #{$dark-border-color-emphasis};
+  --border-color-code: #{$dark-color-code-border};
+
+  // 阴影 - 更适合暗黑模式
+  --box-shadow-base: 0 2px 8px rgba(0, 0, 0, 0.4), 0 0 12px rgba(0, 0, 0, 0.15);
+  --box-shadow-light: 0 2px 16px 0 rgba(0, 0, 0, 0.25);
+  --box-shadow-elevated: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 0, 0, 0.1);
+  --box-shadow-overlay: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 24px rgba(0, 0, 0, 0.2);
+}
+
+.mb-2 {
+  margin: 2px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }

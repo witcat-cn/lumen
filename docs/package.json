@@ -14,15 +14,12 @@
   "license": "ISC",
   "packageManager": "pnpm@10.11.0",
   "devDependencies": {
+    "@popperjs/core": "^2.11.8",
+    "@types/node": "^22.15.29",
     "lucide-vue-next": "^0.511.0",
     "markdown-it": "^14.1.0",
-    "vitepress": "2.0.0-alpha.5"
-  },
-  "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "@types/node": "^22.15.19",
-    "@vitepress-demo-preview/component": "^2.3.2",
-    "@vitepress-demo-preview/plugin": "^1.4.0",
+    "vitepress": "^1.6.3",
+    "vitepress-demo-plugin": "^1.4.5",
     "vitepress-plugin-group-icons": "^1.5.5"
   }
 }

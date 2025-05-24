@@ -1,0 +1,94 @@
+@use 'mixins/mixins' as *;
+@use 'global/var' as *;
+@use 'mixins/config' as *;
+
+@include b(layout) {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-direction: column;
+
+  @include m(horizontal) {
+    flex-direction: row;
+  }
+
+  // 响应式支持
+  @media (max-width: 768px) {
+    &.#{$state-prefix}horizontal {
+      flex-direction: column;
+    }
+  }
+}
+
+@include b(layout-header) {
+  @extend .app-layout;
+  flex-shrink: 0;
+  background-color: rgba(var(--color-primary-rgb), 0.3);
+  box-sizing: border-box;
+  color: var(--color-text-primary);
+  transition: all var(--animation-duration-base) var(--animation-timing-function-base);
+
+  .dark & {
+    background-color: rgba(var(--color-primary-rgb), 0.3);
+    color: var(--color-text-primary);
+  }
+}
+
+@include b(layout-aside) {
+  @extend .app-layout;
+  flex-shrink: 0;
+  background-color: rgba(var(--color-primary-rgb), 0.25);
+  box-sizing: border-box;
+  position: relative;
+  color: var(--color-text-primary);
+  transition: all var(--animation-duration-base) var(--animation-timing-function-base);
+
+  .dark & {
+    background-color: rgba(var(--color-primary-rgb), 0.25);
+    color: var(--color-text-primary);
+  }
+}
+
+@include b(layout-main) {
+  @extend .app-layout;
+  flex-grow: 1;
+  background-color: rgba(var(--color-primary-rgb), 0.15);
+  padding: var(--spacing-large);
+  box-sizing: border-box;
+  color: var(--color-text-primary);
+  transition: all var(--animation-duration-base) var(--animation-timing-function-base);
+  .dark & {
+    background-color: rgba(var(--color-primary-rgb), 0.08);
+    color: var(--color-text-primary);
+  }
+}
+
+@include b(layout-footer) {
+  @extend .app-layout;
+  flex-shrink: 0;
+  background-color: rgba(var(--color-primary-rgb), 0.3);
+  box-sizing: border-box;
+  color: var(--color-text-primary);
+  transition: all var(--animation-duration-base) var(--animation-timing-function-base);
+
+  .dark & {
+    background-color: rgba(var(--color-primary-rgb), 0.3);
+    color: var(--color-text-primary);
+  }
+}
+
+.app-layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 10.5em;
+  font-weight: var(--font-weight-primary);
+}
+
+.common-layout {
+  padding: 10px;
+  height: 20em;
+  border-radius: var(--border-radius-base);
+  overflow: hidden;
+}

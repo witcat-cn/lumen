@@ -1,5 +1,5 @@
-import { ref, watch, onUnmounted, onMounted, nextTick, computed, CSSProperties } from 'vue'
-import { createPopper, Instance as PopperInstance } from '@popperjs/core'
+import {ref, watch, onUnmounted, onMounted, nextTick, computed} from 'vue'
+import {createPopper, Instance as PopperInstance} from '@popperjs/core'
 
 interface PopperProps {
     text: string;
@@ -115,7 +115,6 @@ export function usePopper(props: PopperProps) {
 
     const togglePopper = async (): Promise<void> => {
         showPopper.value = !showPopper.value
-        console.log('showPopper toggled:', showPopper.value)
 
         if (showPopper.value) {
             await nextTick()

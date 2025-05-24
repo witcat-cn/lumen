@@ -39,13 +39,13 @@ const props = defineProps<{
 const iconSize = computed(() => {
   switch (props.size) {
     case 'small':
-      return 12
+      return 14
     case 'large':
-      return 22
+      return 20
     case 'medium':
-      return 16
+      return 18
     default:
-      return 16
+      return 18
   }
 })
 
@@ -71,7 +71,6 @@ const slots = useSlots()
       <slot v-else-if="slots.icon" name="icon"></slot>
       <component v-else-if="props.icon" :is="processedIcon" :size="iconSize"></component>
     </template>
-
     <!-- 插槽内容 -->
     <span v-if="$slots.default">
       <slot></slot>

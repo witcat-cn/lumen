@@ -1,24 +1,57 @@
-@use 'custom-block' as *;
 @use 'sass:color';
 
 // 变量定义
 $primary-color: #0062FF;
-$text-dark: #2b3a29;
-$text-gray: var(--component-preview-text);
-$bg-white: #ffffff;
-$bg-soft: var(--component-preview-bg);
 $border-radius-sm: 8px;
 $border-radius-md: 10px;
 $border-radius-lg: 12px;
 $border-radius-xl: 20px;
+* {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+// Mixins
+@mixin reset-button-style {
+  border: none !important;
+  padding: 0 !important;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin table-cell-style {
+  color: var(--vp-c-text-1) !important;
+  text-align: left !important;
+  border: none;
+  background-color: transparent;
+}
+
+@mixin code-style {
+  padding: 0.4em 0.6em;
+  color: var(--custom-block-note-left);
+}
 
 // 通用文档样式
 .VPDoc {
   p {
-    font-size: 12px;
+    font-size: 14px;
     margin: 2px;
     font-weight: 400;
   }
+
 
   // 表格样式
   table,
@@ -27,20 +60,18 @@ $border-radius-xl: 20px;
     width: 100%;
     margin: .5em 0;
     display: table;
+    border-bottom: 1px solid var(--vp-c-divider);
 
     th, td {
-      color: $text-gray;
-      text-align: left !important;
-      border: none;
+      @include table-cell-style;
     }
 
     th {
-      background-color: $bg-soft;
       font-weight: bold;
     }
 
     tr:nth-child(even) {
-      background-color: $bg-soft;
+      background-color: transparent;
     }
   }
 
@@ -49,15 +80,21 @@ $border-radius-xl: 20px;
   table th code,
   .VPContent table td code,
   .VPContent table th code {
-    padding: 0.4em 0.6em;
-    color: var(--custom-block-note-left);
+    @include code-style;
   }
+}
+
+.divider-line {
+  background-color: transparent !important;
+}
+
+.VPLocalNav {
+  border-bottom: none !important;
 }
 
 // 首页样式
 .VPHome .VPHero {
-  display: flex;
-  justify-content: center;
+  @include flex-center;
 
   .text {
     font-size: 16px;
@@ -70,23 +107,50 @@ $border-radius-xl: 20px;
 
   .name.clip {
     font-size: 3rem;
-    -webkit-text-fill-color: $text-dark !important;
+    -webkit-text-fill-color: color.adjust($primary-color, $lightness: 10%) !important;
+  }
+}
+
+.VPNavBarTitle {
+  .title {
+    border-bottom-color: transparent !important;
+  }
+}
+
+.VPNavBar {
+  background-color: var(--vp-c-bg) !important;
+  border-bottom: 1px solid var(--vp-c-divider);
+
+  .link:hover {
+    color: $primary-color;
+  }
+
+  .active {
+    color: $primary-color !important;
+  }
+}
+
+@media (min-width: 960px) {
+  .VPNavBar:not(.home.top) .content-body {
+    position: relative;
+    background-color: transparent !important;
   }
 }
 
 // 导航栏搜索
 .VPNavBarSearch {
-  display: flex;
-  justify-content: flex-end;
+  @include flex-end;
 
   .DocSearch-Button {
     height: 2rem;
     margin: .3rem;
     border-radius: $border-radius-xl;
-    background-color: $bg-white !important;
+    background-color: transparent;
+
 
     &:hover {
       border: 1px solid $primary-color !important;
+      color: var(--vp-c-text-1) !important;
     }
   }
 }
@@ -98,12 +162,12 @@ $border-radius-xl: 20px;
   ::v-deep(.VPFeature) {
     display: block;
     border-radius: 12px;
-    background-color: #fff;
+    background-color: transparent;
     border: none !important;
   }
 
   .box {
-    background-color: #ffffff;
+    background-color: transparent;
     border: none !important;
   }
 }
@@ -111,17 +175,29 @@ $border-radius-xl: 20px;
 
 // 侧边栏样式
 .VPSidebar {
+  background-color: var(--vp-c-bg) !important;
+
+  .curtain {
+    background-color: var(--vp-c-bg) !important;
+    border: none;
+  }
+
   .item h2.text,
   .item h3.text {
     font-size: 16px;
     font-weight: 800;
-    color: var(--custom-block-text-color) !important;
+    color: var(--vp-c-text-1) !important;
   }
 
   .VPLink.link .text {
     font-size: 12px;
     text-indent: 12px;
     font-weight: 600;
+    color: var(--vp-c-text-1) !important;
+  }
+
+  .VPLink.link .text:hover {
+    color: $primary-color !important;
   }
 }
 
@@ -139,7 +215,9 @@ $border-radius-xl: 20px;
   .is-link.is-active.has-active,
   .is-link.is-active.has-active .text {
     color: $primary-color !important;
+    background-color: color.adjust($primary-color, $lightness: 32%) !important;
   }
+
 
   &.is-active.has-active {
     border-radius: $border-radius-sm;
@@ -153,19 +231,22 @@ $border-radius-xl: 20px;
 
 // 底部导航
 .VPDocFooter .prev-next {
-  display: flex;
-  justify-content: space-between;
+  @include flex-between;
   width: 100%;
   padding: 24px 0;
 
   .pager-link {
-    border: none !important;
-    padding: 0 !important;
+    @include reset-button-style;
     display: flex;
     align-items: center;
 
+    .title {
+      color: $primary-color !important;
+    }
+
+
     .title:hover {
-      color: color.adjust($primary-color, $lightness: 10%) !important;
+      color: color.adjust($primary-color, $lightness: 20%) !important;
     }
 
     .desc {
@@ -198,11 +279,4 @@ $border-radius-xl: 20px;
       vertical-align: middle;
     }
   }
-}
-
-// Demo 组件样式
-.vitepress-demo-preview__element-plus__container,
-.vitepress-demo-preview-description__split-line {
-  box-shadow: none !important;
-  border-radius: $border-radius-md !important;
 }

@@ -6,7 +6,7 @@ import '@lumen-ui/theme-chalk/src/index.scss'
 import './index.scss'
 import { AntDesignContainer, ElementPlusContainer, NaiveUIContainer } from '@vitepress-demo-preview/component'
 import '@vitepress-demo-preview/component/dist/style.css'
-import Popper from '../../zh/components/popper.vue'
+
 import LmPopper from '@lumen-ui/components/popper'
 
 

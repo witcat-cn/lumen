@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // 品牌色
 $color-primary: #0062FF;
 $color-white: #FAFAFB;
@@ -6,7 +8,7 @@ $color-success: #31C27C;
 $color-warning: #FF974A;
 $color-danger: #FC5A5A;
 $color-info: #92929D;
-$color-accent: #50B5FF;
+$color-accent: #0062FF;
 
 // 文本颜色
 $color-text-primary: #44444F;
@@ -14,6 +16,14 @@ $color-text-regular: #696974;
 $color-text-secondary: #92929D;
 $color-text-placeholder: #C7C7D1;
 $color-text-disabled: #E2E2EA;
+
+// 暗黑模式颜色
+$dark-color-text-primary: #FAFAFB;
+$dark-background-color-base: #1C1C24;
+$dark-background-color-light: #28282F;
+$dark-border-color-light: #44444F;
+$dark-background-color-code: #2A2A32;
+$dark-background-color-darker: #202027;
 
 // 边框颜色
 $border-color-base: #44444F;
@@ -64,8 +74,8 @@ $spacing-large: 18px;
 $spacing-extra-large: 32px;
 
 // 动画
-$animation-duration-base: 0.15s;
-$animation-duration-fast: 0.15s;
+$animation-duration-base: 0.3s;
+$animation-duration-fast: 0.3s;
 $animation-timing-function-base: ease-in-out;
 
 // 组件尺寸
@@ -83,3 +93,160 @@ $z-index-modal: 2001;
 $z-index-popover: 2030;
 $z-index-tooltip: 2060;
 $z-index-notification: 2090;
+
+:root {
+  // 颜色通道
+  --color-primary-rgb: #{color.channel($color-primary, "red", $space: rgb)}, #{color.channel($color-primary, "green", $space: rgb)}, #{color.channel($color-primary, "blue", $space: rgb)};
+  --color-success-rgb: #{color.channel($color-success, "red", $space: rgb)}, #{color.channel($color-success, "green", $space: rgb)}, #{color.channel($color-success, "blue", $space: rgb)};
+  --color-warning-rgb: #{color.channel($color-warning, "red", $space: rgb)}, #{color.channel($color-warning, "green", $space: rgb)}, #{color.channel($color-warning, "blue", $space: rgb)};
+  --color-danger-rgb: #{color.channel($color-danger, "red", $space: rgb)}, #{color.channel($color-danger, "green", $space: rgb)}, #{color.channel($color-danger, "blue", $space: rgb)};
+  --color-info-rgb: #{color.channel($color-info, "red", $space: rgb)}, #{color.channel($color-info, "green", $space: rgb)}, #{color.channel($color-info, "blue", $space: rgb)};
+
+  // 品牌色
+  --color-primary: #{$color-primary};
+  --color-primary-light-3: #{color.adjust($color-primary, $lightness: 8%)};
+  --color-primary-light-5: #{color.adjust($color-primary, $lightness: 15%)};
+  --color-primary-light-7: #{color.adjust($color-primary, $lightness: 30%)};
+  --color-primary-dark-2: #{color.adjust($color-primary, $lightness: -10%)};
+
+  --color-success: #{$color-success};
+  --color-success-light-3: #{color.adjust($color-success, $lightness: 8%)};
+  --color-success-light-5: #{color.adjust($color-success, $lightness: 15%)};
+  --color-success-light-7: #{color.adjust($color-success, $lightness: 30%)};
+  --color-success-dark-2: #{color.adjust($color-success, $lightness: -10%)};
+
+  --color-warning: #{$color-warning};
+  --color-warning-light-3: #{color.adjust($color-warning, $lightness: 8%)};
+  --color-warning-light-5: #{color.adjust($color-warning, $lightness: 15%)};
+  --color-warning-light-7: #{color.adjust($color-warning, $lightness: 30%)};
+  --color-warning-dark-2: #{color.adjust($color-warning, $lightness: -10%)};
+
+  --color-danger: #{$color-danger};
+  --color-danger-light-3: #{color.adjust($color-danger, $lightness: 8%)};
+  --color-danger-light-5: #{color.adjust($color-danger, $lightness: 15%)};
+  --color-danger-light-7: #{color.adjust($color-danger, $lightness: 30%)};
+  --color-danger-dark-2: #{color.adjust($color-danger, $lightness: -10%)};
+
+  --color-info: #{$color-info};
+  --color-info-light-3: #{color.adjust($color-info, $lightness: 8%)};
+  --color-info-light-5: #{color.adjust($color-info, $lightness: 15%)};
+  --color-info-light-7: #{color.adjust($color-info, $lightness: 30%)};
+  --color-info-dark-2: #{color.adjust($color-info, $lightness: -10%)};
+
+  --color-accent: #{$color-accent};
+  --color-accent-light-3: #{color.adjust($color-accent, $lightness: 30%)};
+  --color-accent-light-5: #{color.adjust($color-accent, $lightness: 15%)};
+  --color-accent-light-7: #{color.adjust($color-accent, $lightness: 1%)};
+  --color-accent-dark-2: #{color.adjust($color-accent, $lightness: -10%)};
+
+  // 中性色
+  --color-white: #{$color-white};
+  --color-black: #{$color-black};
+  --color-text-primary: #{$color-text-primary};
+  --color-text-regular: #{$color-text-regular};
+  --color-text-secondary: #{$color-text-secondary};
+  --color-text-placeholder: #{$color-text-placeholder};
+  --color-text-disabled: #{$color-text-disabled};
+
+  // 边框颜色
+  --border-color-base: #{$border-color-base};
+  --border-color-light: #{$border-color-light};
+  --border-color-lighter: #{$border-color-lighter};
+  --border-color-extra-light: #{$border-color-extra-light};
+
+  // 背景颜色
+  --background-color-base: #{$background-color-base};
+  --background-color-light: #{$background-color-light};
+  --background-color-darker: #{$background-color-darker};
+
+  // 圆角
+  --border-radius-base: #{$border-radius-base};
+  --border-radius-small: #{$border-radius-small};
+  --border-radius-round: #{$border-radius-round};
+  --border-radius-circle: #{$border-radius-circle};
+
+  // 边框样式
+  --border-width-base: #{$border-width-base};
+  --border-style-base: #{$border-style-base};
+  --border-base: #{$border-base};
+  --border-light: #{$border-light};
+
+  // 阴影
+  --box-shadow-base: #{$box-shadow-base};
+  --box-shadow-light: #{$box-shadow-light};
+
+  // 字体
+  --font-family-base: #{$font-family-base};
+  --font-size-extra-large: #{$font-size-extra-large};
+  --font-size-large: #{$font-size-large};
+  --font-size-medium: #{$font-size-medium};
+  --font-size-base: #{$font-size-base};
+  --font-size-small: #{$font-size-small};
+  --font-size-extra-small: #{$font-size-extra-small};
+  --font-weight-primary: #{$font-weight-primary};
+  --font-weight-secondary: #{$font-weight-secondary};
+  --font-line-height-primary: #{$font-line-height-primary};
+  --font-line-height-secondary: #{$font-line-height-secondary};
+
+  // 间距
+  --spacing-extra-small: #{$spacing-extra-small};
+  --spacing-small: #{$spacing-small};
+  --spacing-base: #{$spacing-base};
+  --spacing-medium: #{$spacing-medium};
+  --spacing-large: #{$spacing-large};
+  --spacing-extra-large: #{$spacing-extra-large};
+
+  // 动画
+  --animation-duration-base: #{$animation-duration-base};
+  --animation-duration-fast: #{$animation-duration-fast};
+  --animation-timing-function-base: #{$animation-timing-function-base};
+
+  // 组件尺寸
+  --component-size-large: #{$component-size-large};
+  --component-size-medium: #{$component-size-medium};
+  --component-size-small: #{$component-size-small};
+
+  // z-index
+  --z-index-normal: #{$z-index-normal};
+  --z-index-dropdown: #{$z-index-dropdown};
+  --z-index-sticky: #{$z-index-sticky};
+  --z-index-fixed: #{$z-index-fixed};
+  --z-index-modal-mask: #{$z-index-modal-mask};
+  --z-index-modal: #{$z-index-modal};
+  --z-index-popover: #{$z-index-popover};
+  --z-index-tooltip: #{$z-index-tooltip};
+  --z-index-notification: #{$z-index-notification};
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    // 文本颜色
+    --color-text-primary: #{$dark-color-text-primary};
+    --color-text-regular: #{$dark-color-text-primary};
+    --color-text-secondary: #{$dark-background-color-code};
+    --color-text-placeholder: #{$dark-background-color-darker};
+    --color-text-disabled: #{color.adjust($dark-color-text-primary, $lightness: 40%)};
+
+    // 品牌色
+    --color-primary: #{color.adjust($color-primary, $lightness: -35%)};
+    --color-success: #{color.adjust($color-success, $lightness: -35%)};
+    --color-warning: #{color.adjust($color-warning, $lightness: -35%)};
+    --color-danger: #{color.adjust($color-danger, $lightness: -35%)};
+    --color-info: #{color.adjust($color-info, $lightness: -35%)};
+
+    // 背景颜色
+    --background-color-base: #{$dark-background-color-base};
+    --background-color-light: #{$dark-background-color-light};
+    --background-color-darker: #{$dark-background-color-darker};
+    --background-color-code: #{$dark-background-color-code};
+
+    // 边框颜色
+    --border-color-base: #{$dark-border-color-light};
+    --border-color-light: #{color.adjust($dark-border-color-light, $lightness: 10%)};
+    --border-color-lighter: #{color.adjust($dark-border-color-light, $lightness: 20%)};
+
+    // 阴影
+    --box-shadow-base: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 6px rgba(0, 0, 0, 0.2);
+    --box-shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.3);
+  }
+}

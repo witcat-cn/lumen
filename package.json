@@ -21,6 +21,6 @@
   "devDependencies": {
     "@popperjs/core": "^2.11.8",
     "lucide-vue-next": "^0.511.0",
-    "sass": "^1.89.0"
+    "sass-embedded": "^1.89.0"
   }
 }

@@ -1,12 +1,14 @@
-import type { DefaultTheme, LocaleSpecificConfig } from 'vitepress'
-import { getNavbar } from '../navs/zh'
-import { sidebar } from '../sidebars/zh'
+import type {DefaultTheme, LocaleSpecificConfig} from 'vitepress'
+import {getNavbar} from '../navs/zh'
+import {sidebar} from '../sidebars/zh'
 
 export const zhConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
     themeConfig: {
+        darkModeSwitchLabel: '主题',
         lastUpdated: {
             text: '最后更新',
         },
+        sidebarMenuLabel: '菜单',
         returnToTopLabel: '返回顶部',
         docFooter: {
             prev: '上一页',

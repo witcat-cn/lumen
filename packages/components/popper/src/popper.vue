@@ -9,7 +9,7 @@
         :class="bem.e('button')"
         @click.stop="togglePopper"
     >
-      <lm-icon size="16">
+      <lm-icon size="20">
         <Info/>
       </lm-icon>
     </button>
@@ -22,7 +22,7 @@
             bem.m(props.placement)
           ]"
       >
-        <span v-html="formattedContent"></span>
+        <span :class="bem.e()" v-html="formattedContent"></span>
         <div
             ref="arrowRef"
             :class="bem.e('arrow')"

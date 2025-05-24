@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <svg :width="size + 'px'" :height="size + 'px'" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
     <path
         fill="currentColor"
         stroke="currentColor"
@@ -15,5 +15,11 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Loading',
+  props: {
+    size: {
+      type: [Number, String],
+      default: 18
+    }
+  }
 })
 </script>

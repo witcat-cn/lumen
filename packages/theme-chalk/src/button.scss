@@ -1,5 +1,7 @@
 @use 'mixins/mixins' as *;
+@use 'mixins/config' as *;
 @use 'global/var' as *;
+
 @use 'sass:color';
 
 @include b(button) {
@@ -10,113 +12,102 @@
   vertical-align: middle;
   line-height: 1;
   cursor: pointer;
-  border: $border-width-base $border-style-base $color-info;
-  border-radius: $border-radius-base;
-  background-color: $color-white;
-  color: $color-text-primary;
-  font-weight: $font-weight-primary;
-  margin: $spacing-extra-small;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  border: var(--border-width-base) var(--border-style-base) var(--color-info);
+  border-radius: var(--border-radius-base);
+  background-color: var(--color-white);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-primary);
+  margin: var(--spacing-extra-small);
   user-select: none;
-  transition: all $animation-duration-base $animation-timing-function-base;
+  transition: all var(--animation-duration-base) var(--animation-timing-function-base);
   transition-property: opacity, transform, background-color, border-color;
-
-  // 交互状态
-  &:hover:not(.is-disabled):not(.is-loading) {
-    opacity: 0.8;
-  }
-
-  &:active:not(.is-disabled):not(.is-loading) {
-    opacity: 1;
-  }
 
   // 尺寸变体
   @include m(small) {
-    padding: 0 $spacing-medium;
-    height: $component-size-small;
-    font-size: $font-size-small;
+    padding: 0 var(--spacing-medium);
+    height: var(--component-size-small);
+    font-size: var(--font-size-small);
   }
 
   @include m(medium) {
-    padding: 0 $spacing-large;
-    height: $component-size-medium;
-    font-size: $font-size-base;
+    padding: 0 var(--spacing-large);
+    height: var(--component-size-medium);
+    font-size: var(--font-size-base);
   }
 
   @include m(large) {
-    padding: 0 $spacing-extra-large;
-    height: $component-size-large;
-    font-size: $font-size-medium;
+    padding: 0 var(--spacing-extra-large);
+    height: var(--component-size-large);
+    font-size: var(--font-size-medium);
   }
 
   // 圆角样式
   @include when(round) {
-    border-radius: $border-radius-round;
+    border-radius: var(--border-radius-round);
   }
 
   // Circle 样式
   @include when(circle) {
-    border-radius: 50%;
+    border-radius: var(--border-radius-circle);
     padding: 0;
-    height: $component-size-medium;
-    width: $component-size-medium;
+    height: var(--component-size-medium);
+    width: var(--component-size-medium);
 
     @include m(small) {
-      width: $component-size-small;
-      height: $component-size-small;
+      width: var(--component-size-small);
+      height: var(--component-size-small);
     }
     @include m(medium) {
-      width: $component-size-medium;
-      height: $component-size-medium;
+      width: var(--component-size-medium);
+      height: var(--component-size-medium);
     }
     @include m(large) {
-      width: $component-size-large;
-      height: $component-size-large;
+      width: var(--component-size-large);
+      height: var(--component-size-large);
     }
   }
 
   @include when(icon-only) {
-    padding: 0 $spacing-small;
+    padding: 0 var(--spacing-small);
 
-
-    &.is-circle {
+    &.#{$state-prefix}circle {
       padding: 0;
     }
   }
 
-
   // 默认状态（无type）样式
   @include when(default) {
-    background-color: $color-white;
-    color: $color-text-primary;
-    border-color: $color-info;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border-color: var(--color-info);
 
-    &:hover:not(.is-disabled):not(.is-loading) {
-      color: $color-accent;
-      background-color: color.adjust($color-accent, $lightness: 30%);;
-      border-color: color.adjust($color-accent, $lightness: -10%);
+    @media (prefers-color-scheme: dark) {
+      color: var(--color-text-primary);
     }
 
-    &:active:not(.is-disabled):not(.is-loading) {
-      color: $color-accent;
-      background-color: color.adjust($color-accent, $lightness: 30%);
-      border-color: $color-primary;
-    }
-
-    &.is-loading,
-    &.is-disabled {
-      cursor: not-allowed;
-      opacity: 0.8;
-      transition: none;
-      background-color: $background-color-light !important;
-      border-color: $border-color-light !important;
-
-      &:hover,
-      &:active {
-        background-color: $background-color-light !important;
-        border-color: $border-color-light !important;
+    @media (hover: hover) {
+      &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+        color: var(--color-accent) !important;
+        background-color: rgba(var(--color-primary-rgb), 0.1);
+        border-color: var(--color-accent-light-5);
       }
     }
+    &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+      color: var(--color-accent) !important;
+      border-color: var(--color-accent-light-7);
+    }
+
+    &.#{$state-prefix}loading,
+    &.#{$state-prefix}disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+      transition: none;
+      background-color: transparent;
+    }
   }
+
   // 类型变体
   $variants: (
           primary: $color-primary,
@@ -126,82 +117,85 @@
           info: $color-info
   );
 
-  @each $type, $color in $variants {
+  @each $type, $color-base in $variants {
     @include m(#{$type}) {
-      $hover-color: color.adjust($color, $lightness: 5%);
-      $active-color: color.adjust($color, $lightness: -15%);
-      @include button-variant($color-white, $color, $color, $hover-color, $active-color);
+      color: var(--color-white);
+      background-color: $color-base;
+      border-color: $color-base;
 
-      // 禁用和加载状态
-      &.is-loading,
-      &.is-disabled {
-        cursor: not-allowed;
-        opacity: 0.8;
-        transition: none;
-        background-color: color.adjust($color, $lightness: 8%) !important;
-        border-color: color.adjust($color, $lightness: 8%) !important;
-
-        &:hover,
-        &:active {
-          background-color: color.adjust($color, $lightness: 8%) !important;
-          border-color: color.adjust($color, $lightness: 8%) !important;
+      @media (hover: hover) {
+        &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+          background-color: color.adjust($color-base, $lightness: 8%);
+          border-color: color.adjust($color-base, $lightness: 8%);
         }
+      }
+
+      &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+        background-color: color.adjust($color-base, $lightness: -10%);
+        border-color: color.adjust($color-base, $lightness: -10%);
+      }
+
+      &.#{$state-prefix}loading,
+      &.#{$state-prefix}disabled {
+        cursor: not-allowed;
+        transition: none;
+        background-color: color.adjust($color-base, $lightness: 15%);
+        border-color: color.adjust($color-base, $lightness: 15%);
+        opacity: 0.5;
       }
     }
   }
+
   // Plain 样式
   @include when(plain) {
     background-color: transparent;
 
-    @each $type, $color in $variants {
-      &.lm-button--#{$type} {
-        color: $color;
-        border-color: $color;
-        background-color: transparent;
+    @each $type, $color-base in $variants {
+      &.#{$namespace}-button--#{$type} {
+        color: $color-base;
+        border-color: $color-base;
+        background-color: rgba(var(--color-#{$type}-rgb), 0.1);
 
-        &:hover:not(.is-disabled):not(.is-loading) {
-          color: $color-white;
-          background-color: $color;
-          border-color: $color;
+        @media (hover: hover) {
+          &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+            color: var(--color-white);
+            background-color: $color-base;
+            border-color: $color-base;
+          }
         }
 
-        &:active:not(.is-disabled):not(.is-loading) {
-          color: $color-white;
-          background-color: color.adjust($color, $lightness: -10%);
-          border-color: color.adjust($color, $lightness: -10%);
+        &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+          color: var(--color-white);
+          background-color: color.adjust($color-base, $lightness: -10%);
+          border-color: color.adjust($color-base, $lightness: -10%);
         }
 
-        &.is-disabled,
-        &.is-loading {
-          color: color.adjust($color, $lightness: 8%);
-          background-color: color.adjust($color, $lightness: 35%) !important;
-          border-color: color.adjust($color, $lightness: 5%);
+        &.#{$state-prefix}disabled,
+        &.#{$state-prefix}loading {
+          color: color.adjust($color-base, $lightness: 15%);
+          background-color: var(--color-white);
+          border-color: color.adjust($color-base, $lightness: 15%);
         }
       }
     }
 
     // 默认状态下的 plain 样式
-    &.is-default {
-      color: $color-text-primary;
-      border-color: $color-info;
+    &.#{$state-prefix}default {
+      color: var(--color-text-primary);
+      border-color: var(--color-info);
       background-color: transparent;
 
-      &:hover:not(.is-disabled):not(.is-loading) {
-        color: $color-accent;
-        border-color: $color-accent;
-        background-color: transparent;
+      @media (hover: hover) {
+        &:hover:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+          color: var(--color-primary) !important;
+          border-color: var(--color-primary);
+          background-color: transparent !important;
+        }
       }
 
-      &:active:not(.is-disabled):not(.is-loading) {
-        color: $color-accent;
-        border-color: color.adjust($color-accent, $lightness: -10%);
-        background-color: transparent;
-      }
-
-      &.is-disabled,
-      &.is-loading {
-        color: color.adjust($color-black, $lightness: 33%);
-        border-color: $border-color-light;
+      &:active:not(.#{$state-prefix}disabled):not(.#{$state-prefix}loading) {
+        color: var(--color-primary) !important;
+        border-color: var(--color-primary);
         background-color: transparent !important;
       }
     }

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Search, SquarePen, Check, Mail, Star, Trash2 } from 'lucide-vue-next'
-
+import Loading from "@lumen-ui/components/internal-icon/Loading.vue";
 </script>
 
 <template>
   <div class="mb-4">
     <lm-button>Default</lm-button>
-    <lm-button type="primary">Primary</lm-button>
+    <lm-button type="primary" loading>Primary</lm-button>
     <lm-button type="success">Success</lm-button>
     <lm-button type="warning">Warning</lm-button>
     <lm-button type="danger">Danger</lm-button>

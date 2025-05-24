@@ -19,6 +19,16 @@ demo-preview=../../examples/Button.vue
 demo-preview=../../examples/ButtonDisabled.vue
 :::
 
+### 加载状态
+
+点击按钮来加载数据，并向用户反馈加载状态。
+
+通过设置 loading 属性为 true 来显示加载中状态。
+
+:::preview
+demo-preview=../../examples/ButtonLoading.vue
+:::
+
 ### 图标按钮
 
 使用图标为按钮添加更多的含义。 你也可以单独使用图标不添加文字来节省显示区域占用。
@@ -29,9 +39,16 @@ demo-preview=../../examples/ButtonDisabled.vue
 demo-preview=../../examples/IconButton.vue
 :::
 
-### API
+### Button API
 
-| 属性名   | 说明 | 类型                                                                  | 默认值 
-:------|:---|---------------------------------------------------------------------|----:
-| size  | 尺寸 | <lm-popper text="enum" popper="`'large' \| 'default' \| 'small'`"/> |   - |
-| color | 图标 | string                                                              |   - |
+| 属性名            | 说明       | 类型                                                                  |    默认值 
+:---------------|:---------|---------------------------------------------------------------------|-------:
+| size           | 尺寸       | <lm-popper text="enum" popper="`'large' \| 'default' \| 'small'`"/> |      - |
+| color          | 图标       | string                                                              |      - |
+| disabled       | 是否为禁用状态  | boolean                                                             |  false |
+| icon-placement | 按钮图标位置   | <lm-popper text="enum" popper="`'left' \| 'right'`"/>               |   left |
+| native-type    | 原生type属性 | <lm-popper text="enum" popper="`'button' \| 'submit' \| 'reset'`"/> | button |
+| plain          | 是否为朴素按钮  | boolean                                                             |  false |
+| round          | 是否为圆角按钮  | boolean                                                             |  false |
+| circle         | 是否为圆形按钮  | boolean                                                             |  false |
+| loading        | 是否为加载状态  | boolean                                                             |  false |

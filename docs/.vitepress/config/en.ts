@@ -4,9 +4,11 @@ import { sidebar } from '../sidebars/en'
 
 export const enConfig: LocaleSpecificConfig<DefaultTheme.Config> = {
     themeConfig: {
+        darkModeSwitchLabel: 'Theme',
         lastUpdated: {
             text: 'LastUpdated',
         },
+        sidebarMenuLabel: 'Menu',
         returnToTopLabel: 'Back to top',
         docFooter: {
             prev: 'Previous page',

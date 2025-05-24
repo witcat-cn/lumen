@@ -1,4 +1,4 @@
-import type { DefaultTheme } from 'vitepress'
+import type {DefaultTheme} from 'vitepress'
 
 export const themeConfig: DefaultTheme.Config = {
     logo: './logo.png',
@@ -11,7 +11,7 @@ export const themeConfig: DefaultTheme.Config = {
                     translations: {
                         button: {
                             buttonText: '搜索',
-                            buttonAriaLabel: '搜索文档'
+                            buttonAriaLabel: '搜索文档',
                         },
                         modal: {
                             noResultsText: '未找到相关内容',
